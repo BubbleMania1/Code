@@ -1,0 +1,40 @@
+class Shooter {
+  float x, y,w,h, angle, spd;
+  Shooter() {
+    x=width/2;
+    y=b.y-b.d/2;
+    spd=PI/180*2;
+    //PI/180=1 degree
+    w=40;
+    h=b.d;
+  }
+  void display() {
+    pushMatrix();
+    translate(x, y+b.d/2);
+    //origin at base of cannon
+    rotate(angle);
+    if(angle>PI/2-20*PI/180){
+     angle=PI/2-20*PI/180; 
+    }
+    if(angle<-PI/2+20*PI/180){
+     angle=-PI/2+20*PI/180; 
+    }
+    //constrains angle to 20 degrees above horizontal
+    rect( 0, -b.d/2, w,h);
+    popMatrix();
+    if (keyPressed) {
+      if (key==CODED) {
+        if (keyCode==RIGHT) {
+          angle+=spd;
+        } 
+        if (keyCode==LEFT) {
+          angle-=spd;
+        }
+        if(keyCode==UP){
+         angle=0; 
+        }
+      }
+    }
+  }
+ 
+}
