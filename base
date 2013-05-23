@@ -1,0 +1,21 @@
+class Base {
+  float x, y, d, hue;
+
+  Base() {
+    d=100;
+    x=width/2;
+    y=height;
+  }
+  void display() {
+    colorMode(HSB);
+    noStroke();  
+
+    hue++;
+    if (hue>360) {
+      hue=0;
+    }
+    fill(hue, 255, 255);
+    ellipse(x, y, d, d);
+    //color changing base
+  }
+}
