@@ -1,37 +1,36 @@
 class Bullet {
-  float x, y, d, xspd, yspd, angle;
+  float x, y, d, xspd, yspd,spd=5;
   color c;
   int n;
   //n=number for colors of balls
   Bullet() {
-    colorMode(RGB);
     n=int(random(1, 6));
     if (n==1) {
-      c=color(250, 109, 234); 
+      c=color(228, 147, 255); 
       //pink
     }
     if (n==2) {
-      c=color(127, 226, 252); 
+      c=color(145, 140, 255); 
       //blue
     }
     if (n==3) {
-      c=color(216,125,252);
+      c=color(200, 150, 255);
       //purple
     }
     if (n==4) {
-      c=color(255, 185, 93); 
+      c=color(20, 170, 255); 
       //orange
     }
     if (n==5) {
-      c=color(160, 250, 96);
+      c=color(84, 143, 255);
       //green
     }
     d=40;
-    x=width/2;
+    x=b.x;
     y=b.y;
     yspd=5;
-    xspd=yspd/tan(PI/2-s.angle);
-    angle=s.angle;
+    xspd=cos(PI/2-s.angle)*spd;
+    yspd=sin(PI/2-s.angle)*spd;
     //angle only checks for initial cannon angle
   }
   void display() {
@@ -50,10 +49,14 @@ class Bullet {
       xspd=-xspd;
     }
   }
-  void touch(Bullet b1) {
+  void touch(Bullet bu, Bullet b1) {
     if (dist(b1.x, b1.y, x, y)<b1.d/2+d/2) {
       yspd=0;
       xspd=0;
+      if (b1.n==n) {
+        shots.remove(b1);
+        shots.remove(bu);
+      }
     }
   }
 }
