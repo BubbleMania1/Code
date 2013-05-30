@@ -9,7 +9,7 @@ class Shooter {
     h=b.d;
   }
   void display() {
-
+    rectMode(CENTER);
     pushMatrix();
     translate(x, y+b.d/2);
     //origin at base of cannon
