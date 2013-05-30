@@ -6,7 +6,8 @@ class Base {
     y=height;
   }
   void display() {
-    noStroke();  
+    //noStroke();
+  stroke(255);  
 
     hue++;
     if (hue>360) {
