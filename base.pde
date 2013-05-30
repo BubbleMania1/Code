@@ -6,8 +6,12 @@ class Base {
     y=height;
   }
   void display() {
-    noStroke();
-    hue = (hue + 1) % 360; // make sure hue doesn't exceed 360
+    noStroke();  
+
+    hue++;
+    if (hue>360) {
+      hue=0;
+    }
     fill(hue, 255, 255,120);
     ellipse(x, y, d, d);
     //color changing base
