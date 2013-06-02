@@ -5,17 +5,23 @@ class Bullet {
   //n=number for colors of balls
   Bullet() {
     n=int(random(1, 6));
-
+  
+//note: to make things less ridiculously difficult, I'm going to 
+//change n so that it can only equal whatever values are 
+//still on screen eventually
+//also balls shouldn't be able to float in mid-air later
     switch(n) {
     case 1: 
       c=color(228, 147, 255); 
       //pink
       break;
+
     case 2: 
 
       c=color(145, 140, 255); 
       //blue
       break;
+
     case 3: 
 
       c=color(200, 150, 255);
@@ -27,13 +33,14 @@ class Bullet {
       c=color(20, 170, 255); 
       //orange
       break;
+
     case 5: 
 
       c=color(84, 143, 255);
       //green
       break;
     }
-    d=40;
+    d=s.w;
     x=b.x;
     y=b.y;
     yspd=5;
@@ -42,6 +49,7 @@ class Bullet {
     //angle only checks for initial cannon angle
   }
   void display() {  
+
     stroke(255);
     fill(c);
     ellipse(x, y, d, d);
@@ -71,6 +79,7 @@ class Bullet {
       if (b1.n==n) {
         shots.remove(b1);
         shots.remove(bu);
+        points+=10;
       }
     }
   }
