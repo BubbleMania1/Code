@@ -5,7 +5,9 @@ class Shooter {
     y=b.y-b.d/2;
     spd=PI/180*2;
     //2 degrees per key press
-    w=40;
+    w=b.d*2/5;
+    //note: processing can't handle numbers less than 1?
+    //2/5*b.d=0 in processing; maybe 2/5 is handled as int?
     h=b.d;
   }
   void display() {
