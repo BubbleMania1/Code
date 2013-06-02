@@ -77,7 +77,9 @@ void draw() {
   if (shots.size()==0) {
     win=true;
   }
+  textSize(50);
   text(points, width/2, height/2);
+  
   if (win) {
     //background(255);
     // text("You Win", width/2, height/2);a
