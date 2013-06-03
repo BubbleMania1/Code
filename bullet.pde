@@ -43,7 +43,6 @@ class Bullet {
     d=s.w;
     x=b.x;
     y=b.y;
-
   }
   void display() {  
 
