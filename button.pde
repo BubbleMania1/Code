@@ -1,26 +1,31 @@
 class Button {
-  float tHeight;
-  color tc, bc, flashc, noflashc,border;
+  float tHeight, tWidth;
+  color tc, bc, flashc, noflashc, border;
   //tc=textcolor bc=button color
   //flashc=hover color, noflashc=nonhovering color
   //tborder=button border color
-  boolean hovered=false, pressed=false;
+  boolean hovered=false, pressed;
   String s;
-  float x,y;
-  Button(color tbc, color tflashc, color tnoflashc,color tborder) {
-
+  float x, y;
+  Button(String ts, color tbc, color tflashc, color tnoflashc, color tborder) {
+    s=ts;
     bc=tbc;
     flashc=tflashc;
     noflashc=tnoflashc;
     border=tborder;
+    tWidth=textWidth(s);
+    tHeight=textAscent()+textDescent();
   }
-  void display(String ts, float tx, float ty) {
-   s=ts;
+  //string inside constructor so width and height can be referenced
+
+  void display( float tx, float ty) {
+
     x=tx;
     y=ty;
 
     textSize(30);
     tHeight=textAscent()+textDescent();
+
     fill(bc);
     rectMode(CENTER);
     stroke(border);
@@ -39,10 +44,6 @@ class Button {
       tc=noflashc;
     }
     fill(tc);
-
     text(s, x, y);
-
-
-   
   }
 }
