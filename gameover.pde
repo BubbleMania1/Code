@@ -7,7 +7,7 @@ class Gameover {
   //checks if "try again" is hovered over;
 
 
-  Button restart=new Button(color(0, 0, 255, 70), color( 0, 0, 255), color(0, 0, 255, 70),color(255));
+  Button restart=new Button("Try Again?", color(0, 0, 255, 70), color( 0, 0, 255), color(0, 0, 255, 70), color(255));
 
   Gameover() {
   }
@@ -15,6 +15,7 @@ class Gameover {
 
     if (keyPressed&&key==ENTER) {
       t=255;
+      //skips fade animation
     }
     points=0;
     noStroke();
@@ -25,9 +26,12 @@ class Gameover {
     t++;
 
     if (t>255) {
+      //only starts after background completely fades in
       y=sin(radians(x))*200;
       y1=sin(radians(x)-PI)*200;
       x+=1.5;
+      fill(0, 0, 255, t-255);
+      text("Rank: "+rank, width/2, height/2-4*(textAscent()+textDescent()));
 
       fill(0, 0, 255, y);
       textSize(50);
@@ -36,8 +40,11 @@ class Gameover {
       fill(0, 0, 255, y1);
       text("Better luck next time", width/2, height/2-(textAscent()+textDescent()));
 
-      restart.display("Try again?", width/2, height/2);
-      
+      fill(0, 0, 255, t-255);
+      textSize(30);
+      text("Final score: "+points+"-("+shotsTaken+")*2 = "+fpoints, width/2, height/2-.2*restart.tHeight);
+      restart.display( width/2, height/2+restart.tHeight);
+
       stroke(0, 0, 0, 510-g.t);
       fill(0, 0, 0, 510-g.t); 
       rect(restart.x, restart.y+.15*textAscent(), textWidth(restart.s)*13/9, restart.tHeight);
@@ -56,6 +63,8 @@ class Gameover {
         gameover=false;
         restart.pressed=false;
         points=0;
+        shotsTaken=0;
+       
         //all animations run again if you lose sgain
       }
     }
