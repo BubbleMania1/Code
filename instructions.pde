@@ -20,12 +20,13 @@ class Instructions {
       m.instructions.pressed=false; 
       back.pressed=false;
     }
-    
+
     tutorial.display(width/2, 6.5*tHeight);
     if (tutorial.pressed) {
       t.display();
-      
     }
-
+    else {
+      t.sh.angle=0;
+    }
   }
 }
