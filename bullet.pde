@@ -5,11 +5,11 @@ class Bullet {
   //n=number for colors of balls
   Bullet() {
     n=int(random(1, 6));
-  
-//note: to make things less ridiculously difficult, I'm going to 
-//change n so that it can only equal whatever values are 
-//still on screen eventually
-//also balls shouldn't be able to float in mid-air later
+
+    //note: to make things less ridiculously difficult, I'm going to 
+    //change n so that it can only equal whatever values are 
+    //still on screen eventually
+    //also balls shouldn't be able to float in mid-air later
     switch(n) {
     case 1: 
       c=color(228, 147, 255); 
@@ -43,10 +43,7 @@ class Bullet {
     d=s.w;
     x=b.x;
     y=b.y;
-    yspd=5;
-    //    xspd=cos(PI/2-s.angle)*spd;
-    //    yspd=sin(PI/2-s.angle)*spd;
-    //angle only checks for initial cannon angle
+
   }
   void display() {  
 
