@@ -11,6 +11,7 @@ boolean win=false;
 Won w;  
 
 Gameover g;
+
 //-------------------------------------------------------------------
 Interface i;
 float font=50;
@@ -56,15 +57,21 @@ void draw() {
     //separate add statement so that shot bullets will be removed 
     //and new one added in cannon
     move=false;
-  } else {
+  } 
+  else {
     //-------------------GLOBAL POINTS RECORD------------------------
     fpoints=points-shotsTaken*2;
     if (fpoints<50) {
       rank="Complete Loser";
-    } else if (fpoints<100) {
+    } 
+    else if (fpoints<100) {
       rank="Barely Competent";
-    } else if (fpoints<200) {
+    } 
+    else if (fpoints<200) {
       rank="Amateur";
+    }
+    else if (fpoints<300) {
+      rank="Bubblemaniac";
     }
     //-----------------------------------------------------------------
 
@@ -131,7 +138,7 @@ void draw() {
       if (w.t>255) {
         s.angle=0;
         //cannon resets after fade
-      } 
+      }
     }
     if (gameover) {
       g.display();
