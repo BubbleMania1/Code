@@ -1,4 +1,5 @@
 class Interface {
+
   Interface() {
   }
   void display() {
@@ -12,5 +13,6 @@ class Interface {
     fill(0, 0, 255, 70);
     rect(0, height-s.h, width, s.h);
     //different transparencies for border areas
+
   }
 }
