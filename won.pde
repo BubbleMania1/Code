@@ -6,7 +6,9 @@ class Won {
 
   float x, y, y1;
   float h=0, s=0, b=255;
+  Ball b1=new Ball();
   Button restart=new Button("Play again?", color(180, 200, 255, 120), color(0, 0, 255, 150), color(255), color(255));
+  
   Won() {
   }
   void display() {
@@ -25,6 +27,7 @@ class Won {
     t++;
     if (t>255) {
       //only starts when background completely fades in
+      b1.display();
 
       tHeight=textAscent()+textDescent();
 
