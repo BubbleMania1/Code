@@ -1,105 +1,64 @@
-ArrayList shots=new ArrayList();
-Base b;
-Shooter s;
-boolean move=false;
-//keeps track of if balls are moving
-//only one ball can be shot at a time
-boolean gameover=false;
-boolean win=false;
-Gameover g;
-Interface i;
-float font=50;
-int points;
-int shotsTaken;
-//shotsTaken subtracts from score after winning
-int fpoints;
-//5 points deducted per shot taken
-Won w;
+class Won {
+  float t, t2=127.5, tHeight;
+  //t controls transparency of almost everything
+  //tHeight=textHeight (doesn't match textSize() by default
 
-void setup() {
 
-  colorMode(HSB);
-  rectMode(CENTER);
-  size(800, displayHeight-100);
-  b=new Base();
-  s=new Shooter();
-  g=new Gameover();
-  i=new Interface();
-  w=new Won();
-  
-  shots.add(new Bullet());
-  textSize(font);
-  textAlign(CENTER, CENTER);
-}
-void draw() {
-
-  fpoints=points-shotsTaken*5;
-
-  //rectMode(CORNER);
-  if (shots.size()<1) {
-    shots.add(new Bullet());
-    move=false;
+  float x, y, y1;
+  float h=0, s=0, b=255;
+  Button restart=new Button("Play again?", color(180, 200, 255, 120), color(0, 0, 255, 150), color(255), color(255));
+  Won() {
   }
-  //above is to avoid freeze glitching for code like below
-  //referencing shots.size()-1
-  Bullet bu2=(Bullet)shots.get(shots.size()-1);
-  background(bu2.c);
-  //shots.size()>0 so that can't glitch out when all balls gone
+  void display() {
+    if (keyPressed&&key==ENTER) {
+      t=765+255;
+      t2=0;
+      //skips fade animation
+    }
 
 
-  b.display();
-  s.display();
-  i.display();
-  for (int i=0;i<shots.size();i++) {
-    Bullet bu=(Bullet)shots.get(i);
-    bu.display();
-    for (int j=0;j<shots.size();j++) {
-      if (j!=i) {
-        Bullet bu1=(Bullet)shots.get(j);
-        bu.touch(bu, bu1);
+    rectMode(CORNER);
+
+
+    fill(132, 120, 255, t);
+    rect(0, 0, width, height);
+    t++;
+    if (t>255) {
+      //only starts when background completely fades in
+
+      tHeight=textAscent()+textDescent();
+
+      fill(h, s, b, t-560);
+      text("Rank: "+rank, width/2, height/2-tHeight*4);
+      if (t<(255+510)/2) {
+        //congratulations begins to fade again at midpoint
+        //between opaque and transparent
+        fill(h, s, b, t-255);
+      } else {
+        fill(h, s, b, t2);
+        t2--;
       }
-    }
-  }
-  if (move==true) {
-    if (shots.size()>0) {
-      Bullet bu=(Bullet)shots.get(shots.size()-1);
-      bu.move();
-    }
-  }
-  for (int i=0;i<shots.size()-1;i++) {
-    Bullet bu3=(Bullet)shots.get(i);
-    if (bu3.y+bu3.d/2>height-s.h) {
-      gameover=true;
-      //shots.size()-1 so it doesn't count the ball inside the cannon
-      //which would otherwise always fulfill the gameover condition
-    }
-  }
-  if (shots.size()==0) {
-    win=true;
-  }
-  textSize(50);
-  text(points, width/2, height/2);
-  
-  if (win) {
-    //background(255);
-    // text("You Win", width/2, height/2);a
+      text("Congratulations! You won!", width/2, height/2-tHeight/2);
+      textSize(40);
 
-    w.display();
-  }
-  if (gameover) {
-    g.display();
-  }
-}
-void keyPressed() {
-  if (gameover==false&&win==false) {
-    //can't shoot when gameover or win so that score can't
-    //be changed afterwards
-    if (move==false) {
-      if (key==' ') {
-        Bullet bu=(Bullet)shots.get(shots.size()-1);
-        bu.update();
-        move=true;
-        shotsTaken++;
+      fill(h, s, b, t-510);
+      text("Final score: "+points+"-("+shotsTaken+")*2 = "+fpoints, width/2, height/2-tHeight/2);
+      //text("Placeholder text", width/2, height/2+tHeight/2);
+
+      restart.display( width/2, height/2+(textAscent()+textDescent())/2);
+      if (restart.pressed) {
+        while (shots.size ()>0) {
+          shots.remove(shots.size()-1);
+        }
+        shots.add(new Bullet());
+        win=false;
+        restart.pressed=false;
+        points=0;
+        t=0;
+        t2=127.5;
+        shotsTaken=0;
+
+        //all animations run again if you win again
       }
     }
   }
