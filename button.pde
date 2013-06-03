@@ -4,7 +4,10 @@ class Button {
   //tc=textcolor bc=button color
   //flashc=hover color, noflashc=nonhovering color
   //tborder=button border color
-  boolean hovered=false, pressed;
+  boolean hovered, pressed;
+//note: can't use clicked to determine if released because that would mess up all other button code as main menu and end game buttons are declared inside draw loop
+//so their hovered and pressed are reset each frame
+
   String s;
   float x, y;
   Button(String ts, color tbc, color tflashc, color tnoflashc, color tborder) {
@@ -36,10 +39,12 @@ class Button {
     if (mouseX<x+textWidth(s)/2*13/9&&mouseX>x-textWidth(s)/2*13/9&&mouseY>y-tHeight/2&&mouseY<y+tHeight/2) {
       hovered=true;
       tc=flashc;
+
       if (mousePressed) {
         pressed=true;
       }
-    } else {
+    } 
+    else {
       hovered=false;
       tc=noflashc;
     }
