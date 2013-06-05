@@ -98,7 +98,7 @@ void draw() {
 
     main=new Button("Main Menu", bu2.c, color(0, 0, 255, 150), color(255), color(255));
     main.display(width/4, height-s.h/2);
-    if (main.pressed) {
+    if (main.pressed&&gameover==false&&win==false) {
       menu=true;
     }
     b.display();
