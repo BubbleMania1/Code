@@ -36,3 +36,4 @@ class Tutorial {
     sh.display();
   }
 }
+//note: possibly hard to implement, may take out of game
