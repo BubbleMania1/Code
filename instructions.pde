@@ -15,13 +15,13 @@ class Instructions {
     tHeight=textAscent()+textDescent();
     fill(255);
     text("Instructions", width/2, tHeight/2);
-    back.display(width/2, 6*tHeight);
+    back.display(width/2, 8*tHeight);
     if (back.pressed) {
       m.instructions.pressed=false; 
       back.pressed=false;
     }
 
-    tutorial.display(width/2, 6.5*tHeight);
+    tutorial.display(width/2, 8.5*tHeight);
     if (tutorial.pressed) {
       t.display();
     }
