@@ -1,165 +1,104 @@
-ArrayList shots=new ArrayList();
-Base b;
-Shooter s;
-boolean move=false;
-//keeps track of if balls are moving
-//only one ball can be shot at a time
-//---------------------------WIN/LOSE------------------------------
-boolean gameover=false;
+class Bullet {
+  float x, y, d, xspd, yspd, spd=10;
+  color c;
+  int n;
+  //n=number for colors of balls
+  int counter;
+  Bullet() {
+    n=int(random(1, 6));
 
-boolean win=false;
-Won w;  
+    //note: to make things less ridiculously difficult, I'm going to 
+    //change n so that it can only equal whatever values are 
+    //still on screen eventually
+    //also balls shouldn't be able to float in mid-air later
+    switch(n) {
+    case 1: 
+      c=color(228, 147, 255); 
+      //pink
+      break;
 
-Gameover g;
+    case 2: 
 
-//-------------------------------------------------------------------
-Interface i;
-float font=50;
-//---------------------------POINT STUFF--------------------------
-String rank;
-int points;
-int shotsTaken;
-//shotsTaken subtracts from score after winning
-int fpoints;
-//5 points deducted per shot taken
-//-------------------------------------------------------------------
+      c=color(145, 140, 255); 
+      //blue
+      break;
 
-Button quit;
-Button main;
-//quit=end game, main=main menu
-boolean menu=true;
-Menu m;
-void setup() {
+    case 3: 
 
-  colorMode(HSB);
-  rectMode(CENTER);
-  size(800, displayHeight-100);
-  b=new Base();
-  s=new Shooter();
-  g=new Gameover();
-  i=new Interface();
-  w=new Won();
-  m=new Menu();
-  shots.add(new Bullet());
-  textSize(font);
-  textAlign(CENTER, CENTER);
-}
-void draw() {
+      c=color(200, 150, 255);
+      //purple
+      break;
 
-  if (menu) {
-    m.display();
-    shotsTaken=0;
-    points=0;
-    while (shots.size ()>0) {
-      shots.remove(shots.size()-1);
+    case 4: 
+
+      c=color(20, 170, 255); 
+      //orange
+      break;
+
+    case 5: 
+
+      c=color(84, 143, 255);
+      //green
+      break;
     }
-    shots.add(new Bullet());
-    //separate add statement so that shot bullets will be removed 
-    //and new one added in cannon
-    move=false;
-  } 
-  else {
-    //-------------------GLOBAL POINTS RECORD------------------------
-    fpoints=points-shotsTaken*2;
-    if (fpoints<50) {
-      rank="Complete Loser";
-    } 
-    else if (fpoints<100) {
-      rank="Barely Competent";
-    } 
-    else if (fpoints<200) {
-      rank="Amateur";
-    }
-    else if (fpoints<300) {
-      rank="Bubblemaniac";
-    }
-    //-----------------------------------------------------------------
+    d=s.w;
+    x=b.x;
+    y=b.y;
+  }
+  void display() {  
 
-    if (shots.size()<1) {
-      shots.add(new Bullet());
+    stroke(255);
+    fill(c);
+    ellipse(x, y, d, d);
+  }
+  void move() {
+    x+=xspd;
+    y-=yspd;
+    if (y-d/2<=0) {
+      yspd=0;
+      xspd=0;
+      y=d/2;
+      //balls can't go through ceiling
+    }
+    if (yspd==0&&xspd==0) {
       move=false;
+      shots.add(new Bullet());
+      //every time the ball stops, a new ball is added to the cannon
     }
-    //above is to avoid freeze glitching for code like below
-    //referencing shots.size()-1
-    Bullet bu2=(Bullet)shots.get(shots.size()-1);
-    background(bu2.c);
-
-    //shots.size()>0 so that can't glitch out when all balls gone
-
-
-
-    i.display();
-
-    quit=new Button("End Game", bu2.c, color(0, 0, 255, 150), color(255), color(255));
-    quit.display( width*3/4, height-s.h/2);
-    if (quit.pressed) {
-      gameover=true;
+    if (x-d/2<0||x+d/2>width) {
+      xspd=-xspd;
     }
+  }
+  void touch(Bullet b1) {
+    if (dist(b1.x, b1.y, x, y)<b1.d/2+d/2) {
 
-    main=new Button("Main Menu", bu2.c, color(0, 0, 255, 150), color(255), color(255));
-    main.display(width/4, height-s.h/2);
-    if (main.pressed&&gameover==false&&win==false) {
-      menu=true;
-    }
-    b.display();
-    s.display();
-    for (int i=0;i<shots.size();i++) {
-      Bullet bu=(Bullet)shots.get(i);
-      bu.display();
-      for (int j=0;j<shots.size();j++) {
-        if (j!=i) {
-          Bullet bu1=(Bullet)shots.get(j);
-          bu.touch(bu, bu1);
-        }
+      //y=bu=bullet above (relatively) other one
+
+
+      b1.y=y+d;
+      //use trig later
+
+
+      if (abs(yspd)>0&&n==b1.n) {
+        counter+=1;
+        b1.counter=counter;
       }
-    }
-    if (move==true) {
-      if (shots.size()>0) {
-        Bullet bu=(Bullet)shots.get(shots.size()-1);
-        bu.move();
-      }
-    }
-    for (int i=0;i<shots.size()-1;i++) {
-      Bullet bu3=(Bullet)shots.get(i);
-      if (bu3.y+bu3.d/2>height-s.h) {
-        gameover=true;
-        //shots.size()-1 so it doesn't count the ball inside the cannon
-        //which would otherwise always fulfill the gameover condition
-      }
-    }
-    if (shots.size()==0) {
-      win=true;
-    }
-    textSize(50);
-    text(points, width/2, height/2);
 
-    if (win) {
-      w.display();
-      if (w.t>255) {
-        s.angle=0;
-        //cannon resets after fade
-      }
-    }
-    if (gameover) {
-      g.display();
-      if (g.t>255) {
-        s.angle=0;
-        //cannon resets after fade
+
+      b1.xspd=0;
+      b1.yspd=0;
+      if (b1.n==n) {
+        shots.remove(b1);
+        shots.remove(this);
+        points+=10;
       }
     }
   }
-}
-void keyPressed() {
-  if (gameover==false&&win==false&&menu==false) {
-    //can't shoot when gameover or win so that score can't
-    //be changed afterwards
-    if (move==false) {
-      if (key==' ') {
-        Bullet bu=(Bullet)shots.get(shots.size()-1);
-        bu.update();
-        move=true;
-        shotsTaken++;
-      }
-    }
+  void update() {
+    xspd=cos(PI/2-s.angle)*spd;
+    yspd=sin(PI/2-s.angle)*spd;
+    //adjusts angle of ball to match cannon
+    //exists so that ball position is changed only once
+    //so if cannon moves after shot, won't affect ball
   }
 }
