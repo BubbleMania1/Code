@@ -4,11 +4,11 @@ class Won {
   //tHeight=textHeight (doesn't match textSize() by default
 
 
-  float x, y, y1;
+    float x, y, y1;
   float h=0, s=0, b=255;
   Ball b1=new Ball();
   Button restart=new Button("Play again?", color(180, 200, 255, 120), color(0, 0, 255, 150), color(255), color(255));
-  
+
   Won() {
   }
   void display() {
@@ -27,8 +27,12 @@ class Won {
     t++;
     if (t>255) {
       //only starts when background completely fades in
-      b1.display();
 
+      b1.display();
+      stroke(132,120,255,510-t);
+      fill(132, 120, 255, 510-t);
+      ellipse(b1.x, b1.y, b1.d*2, b1.d*2);
+      //code to fade in ball
       tHeight=textAscent()+textDescent();
 
       fill(h, s, b, t-560);
@@ -37,7 +41,8 @@ class Won {
         //congratulations begins to fade again at midpoint
         //between opaque and transparent
         fill(h, s, b, t-255);
-      } else {
+      } 
+      else {
         fill(h, s, b, t2);
         t2--;
       }
@@ -49,6 +54,11 @@ class Won {
       //text("Placeholder text", width/2, height/2+tHeight/2);
 
       restart.display( width/2, height/2+(textAscent()+textDescent())/2);
+      fill(132, 120, 255, 510-t);
+      rectMode(CENTER);
+      stroke(132, 120, 255, 510-t);
+      rect(restart.x, restart.y+.15*textAscent(), textWidth(restart.s)*13/9, restart.tHeight);
+      //rectangle to allow play again to fade in
       if (restart.pressed) {
         while (shots.size ()>0) {
           shots.remove(shots.size()-1);
