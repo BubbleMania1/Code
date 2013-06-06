@@ -3,6 +3,7 @@ class Bullet {
   color c;
   int n;
   //n=number for colors of balls
+  int counter;
   Bullet() {
     n=int(random(1, 6));
 
@@ -68,13 +69,27 @@ class Bullet {
       xspd=-xspd;
     }
   }
-  void touch(Bullet bu, Bullet b1) {
-    if (dist(b1.x, b1.y, x, y)<=b1.d/2+d/2) {
-      yspd=0;
-      xspd=0;
+  void touch(Bullet b1) {
+    if (dist(b1.x, b1.y, x, y)<b1.d/2+d/2) {
+
+      //y=bu=bullet above (relatively) other one
+
+
+      b1.y=y+d;
+      //use trig later
+
+
+      if (abs(yspd)>0&&n==b1.n) {
+        counter+=1;
+        b1.counter=counter;
+      }
+
+
+      b1.xspd=0;
+      b1.yspd=0;
       if (b1.n==n) {
         shots.remove(b1);
-        shots.remove(bu);
+        shots.remove(this);
         points+=10;
       }
     }
