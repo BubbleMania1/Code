@@ -75,6 +75,10 @@ void draw() {
     else if (fpoints<300) {
       rank="Bubblemaniac";
     }
+    else if (fpoints>9000){
+     rank="Paras Jha"; 
+    }
+    //insert pictures and music for rank
     //-----------------------------------------------------------------
 
     if (shots.size()<1) {
