@@ -15,5 +15,5 @@ class Level {
     while (balls.size ()<size) {
       balls.add(new Bullet());
     }
-   }
- }
+  }
+}
