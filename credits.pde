@@ -15,7 +15,7 @@ class Credits {
     tHeight=textAscent()+textDescent();
 
    
-    fill(hue,255,255);
+    fill(hue,255,255,120);
     text("Credits", width/2, tHeight/2-6*tHeight+y);
     hue=(hue+1)%360;
     textSize(40);
