@@ -7,6 +7,10 @@ class Button {
   boolean hovered, pressed;
 //note: can't use clicked to determine if released because that would mess up all other button code as main menu and end game buttons are declared inside draw loop
 //so their hovered and pressed are reset each frame
+//fix is possible if not lazy: transfer color out of constructor
+//to void display, so color can change in the main menu and end game
+//buttons on the play screen without having to declare
+//buttons repetively
 
   String s;
   float x, y;
