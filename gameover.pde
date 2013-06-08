@@ -17,7 +17,7 @@ class Gameover {
       t=255;
       //skips fade animation
     }
-    points=0;
+
     noStroke();
     rectMode(CORNER);
 
