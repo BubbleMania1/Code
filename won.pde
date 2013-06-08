@@ -29,7 +29,7 @@ class Won {
       //only starts when background completely fades in
 
       b1.display();
-      stroke(132,120,255,510-t);
+      stroke(132, 120, 255, 510-t);
       fill(132, 120, 255, 510-t);
       ellipse(b1.x, b1.y, b1.d*2, b1.d*2);
       //code to fade in ball
@@ -41,8 +41,7 @@ class Won {
         //congratulations begins to fade again at midpoint
         //between opaque and transparent
         fill(h, s, b, t-255);
-      } 
-      else {
+      } else {
         fill(h, s, b, t2);
         t2--;
       }
@@ -64,6 +63,12 @@ class Won {
           shots.remove(shots.size()-1);
         }
         shots.add(new Bullet());
+        //bullets shot removed, one added to cannon
+        while (levels[levelcounter].balls.size ()>0) {
+          levels[levelcounter].balls.remove(0);
+        }
+        levelcounter=0;
+        //balls in current level removed
         win=false;
         restart.pressed=false;
         points=0;
