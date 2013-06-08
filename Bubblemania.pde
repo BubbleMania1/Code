@@ -47,9 +47,8 @@ void setup() {
   shots.add(new Bullet());
   for (int i=0;i<levels.length;i++) {
     if (i==0) {
-      levels[i]=new Level(8);
-    }
-    else {
+      levels[i]=new Level(48);
+    } else {
       levels[i]=new Level(30);
       //each level has 30 balls;
     }
@@ -123,57 +122,64 @@ void draw() {
       if (levels[i].load==true) {
         levels[i].load=false;
         levels[0].update();
-        switch (levelcounter) {
-        case 0:
-          //          for (int j=0;j<levels[0].balls.size();j++) {
-          //            Bullet temp=(levels[0].balls.get(j));
-          //            temp.x=j*temp.d+temp.d/2;
-          //            temp.y=j*temp.d+temp.d/2;
-          //          }
-          for (int j=0;j<levels[levelcounter].balls.size();j++) {
-            Bullet temp=(levels[levelcounter].balls.get(j));
-            switch(j) {
-            case 0: 
-              temp.x=width/2-50;
-              temp.y=height/2;
-              break;
-            case 1:
-              temp.x=width/2+50; 
-              temp.y=height/2;
-              break;
+        for (int j=0;j<levels[levelcounter].balls.size();j++) {
+          Bullet temp=(levels[levelcounter].balls.get(j));
+          switch (levelcounter) {
+          case 0:
 
-            case 2:
-              temp.x=width/2-100;
-              temp.y=height/2+50;
-              break;
-            case 3:
-              temp.x=width/2-100+s.w;
-              temp.y=height/2+50+s.w;
+            if (j<8) {
+              switch(j) {
+              case 0: 
+                temp.x=width/2-50;
+                temp.y=height/2;
+                break;
+              case 1:
+                temp.x=width/2+50; 
+                temp.y=height/2;
+                break;
 
-              break;
-            case 4:
-              temp.x=width/2-100+2*s.w;
-              temp.y=height/2+50+1.5*s.w;
+              case 2:
+                temp.x=width/2-100;
+                temp.y=height/2+50;
+                break;
+              case 3:
+                temp.x=width/2-100+s.w;
+                temp.y=height/2+50+s.w;
 
-              break;
-            case 5:
-              temp.x=width/2-100+3*s.w;
-              temp.y=height/2+50+1.5*s.w;  
-              break;
-            case 6:
-              temp.x=width/2-100+4*s.w;
-              temp.y=height/2+50+s.w;
-              break;
-            case 7:
-              temp.x=width/2-100+5*s.w;
-              temp.y=height/2+50;
+                break;
+              case 4:
+                temp.x=width/2-100+2*s.w;
+                temp.y=height/2+50+1.5*s.w;
+
+                break;
+              case 5:
+                temp.x=width/2-100+3*s.w;
+                temp.y=height/2+50+1.5*s.w;  
+                break;
+              case 6:
+                temp.x=width/2-100+4*s.w;
+                temp.y=height/2+50+s.w;
+                break;
+              case 7:
+                temp.x=width/2-100+5*s.w;
+                temp.y=height/2+50;
+                break;
+              }
+            } else if (j<28) {
+
+              temp.x=(j-8)*s.w+s.w/2;
+              temp.y=width/2-100;
+            } else if (j<49) {
+              temp.x=(j-28)*s.w+s.w/2;
+              temp.y=width/2+200;
             }
+
+
+            break;
+          case 1:
+
+            break;
           }
-          break;
-       case 1:
-       for (int j=0;j<levels[levelcounter].balls.size();j++) {
-            Bullet temp=(levels[levelcounter].balls.get(j));}
-       break;
         }
       }
     }
@@ -224,10 +230,10 @@ void draw() {
     if (shots.size()==0&&levels[levelcounter].balls.size()==0) {
       if (levelcounter==totallevels) {
         win=true;
-      }
-      else {
+      } else {
         levelcounter++;
       }
+      //buggy right now because of ball load code
     }
     textSize(50);
     text(points, width/2, height/2);
