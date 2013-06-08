@@ -58,13 +58,19 @@ class Gameover {
           shots.remove(shots.size()-1);
         }
         shots.add(new Bullet());
+        //bullets shot removed, one more added in cannon
+        while (levels[levelcounter].balls.size ()>0) {
+          levels[levelcounter].balls.remove(0);
+        }
+        levelcounter=0;
+        //balls in current level removed
         t=0;
         x=0;
         gameover=false;
         restart.pressed=false;
         points=0;
         shotsTaken=0;
-       
+
         //all animations run again if you lose sgain
       }
     }
