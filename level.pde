@@ -29,13 +29,16 @@ class Level {
         bu.touch(shots, balls, original);
       }
     }
-    for(int i=0;i<balls.size();i++){
-   for(int j=0;j<balls.size();j++){
-    if(j!=i){
-      
-    }
-   } 
+    //--------checks level balls with level balls
+//    for (int i=0;i<balls.size();i++) {
+//      Bullet bu1=balls.get(i);
+//      for (int j=0;j<balls.size();j++) {
+//        if (j!=i) {
+//          Bullet bu2=balls.get(j);
+//          bu1.touch(balls, balls, bu2);
+//        }
+//      }
+//    }
+    //-------can be commented out without harm
   }
-  }
-  
 }
