@@ -67,7 +67,7 @@ class Won {
         while (levels[levelcounter].balls.size ()>0) {
           levels[levelcounter].balls.remove(0);
         }
-        levelcounter=0;
+        levelcounter=1;
         //balls in current level removed
         win=false;
         restart.pressed=false;
