@@ -49,7 +49,7 @@ class Level {
       for (int j=0;j<balls.size();j++) {
         if (j!=i) {
           Bullet bu2=balls.get(j);
-          if (dist(bu1.x, bu1.y, bu2.x, bu2.y)<=bu1.d/2+bu2.d/2&&bu1.n==bu2.n) {
+          while (dist(bu1.x, bu1.y, bu2.x, bu2.y)<=bu1.d/2+bu2.d/2&&bu1.n==bu2.n) {
             bu1.n=int(random(1, 6));
             bu2.n=int(random(1, 6));
           }
