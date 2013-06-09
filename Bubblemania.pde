@@ -132,47 +132,47 @@ void draw() {
               switch(j) {
               case 0: 
                 temp.x=width/2-50;
-                temp.y=height/2;
+                temp.y=height/2-80;
                 break;
               case 1:
                 temp.x=width/2+50; 
-                temp.y=height/2;
+                temp.y=height/2-80;
                 break;
 
               case 2:
                 temp.x=width/2-100;
-                temp.y=height/2+50;
+                temp.y=height/2+50-80;
                 break;
               case 3:
                 temp.x=width/2-100+s.w;
-                temp.y=height/2+50+s.w;
+                temp.y=height/2+50+s.w-80;
 
                 break;
               case 4:
                 temp.x=width/2-100+2*s.w;
-                temp.y=height/2+50+1.5*s.w;
+                temp.y=height/2+50+1.5*s.w-80;
 
                 break;
               case 5:
                 temp.x=width/2-100+3*s.w;
-                temp.y=height/2+50+1.5*s.w;  
+                temp.y=height/2+50+1.5*s.w-80;  
                 break;
               case 6:
                 temp.x=width/2-100+4*s.w;
-                temp.y=height/2+50+s.w;
+                temp.y=height/2+50+s.w-80;
                 break;
               case 7:
                 temp.x=width/2-100+5*s.w;
-                temp.y=height/2+50;
+                temp.y=height/2+50-80;
                 break;
               }
             } else if (j<28) {
 
               temp.x=(j-8)*s.w+s.w/2;
-              temp.y=width/2-100;
+              temp.y=width/2-100-80;
             } else if (j<49) {
               temp.x=(j-28)*s.w+s.w/2;
-              temp.y=width/2+200;
+              temp.y=width/2+200-80;
             }
 
 
