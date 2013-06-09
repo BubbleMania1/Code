@@ -3,8 +3,10 @@ class Menu {
   Button start=new Button("Start Game", color(180, 200, 255, 120), color(0, 0, 255, 150), color(255), color(255));
   Button instructions=new Button("Instructions", color(180, 200, 255, 120), color(0, 0, 255, 150), color(255), color(255));
   Button credits=new Button("Credits", color(180, 200, 255, 120), color(0, 0, 255, 150), color(255), color(255));
+  Button lSelect=new Button("Level Select", color(180, 200, 255, 120), color(0, 0, 255, 150), color(255), color(255));
   Instructions i=new Instructions();
   Credits c=new Credits();
+  LevelSelect l=new LevelSelect();
   Ball b=new Ball();
   Menu() {
   }
@@ -42,10 +44,16 @@ class Menu {
 
     //instructions will be new class
     if (instructions.pressed==false) {
-      credits.display(width/2, height/2+2.4*credits.tHeight);
+      credits.display(width/2, height/2+3.6*credits.tHeight);
     }
     if (credits.pressed) {
       c.display();
+    }
+    if (credits.pressed==false&&instructions.pressed==false) {
+      lSelect.display(width/2, height/2+2.4*credits.tHeight);
+    }
+    if(lSelect.pressed){
+      l.display();
     }
   }
 }
