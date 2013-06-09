@@ -25,11 +25,20 @@ class Shooter {
     //constrains angle to 20 degrees above horizontal
 
     rect( 0, -b.d/2, w, h);
+    if (levelcounter==0) {
+      //stroke(100, 255, 255);
 
-    stroke(100, 255, 255);
-    line(0, 0, 0, -height);
-    //laser sight (perhaps add for powerup/first level later?)
 
+      stroke(bu2.c);
+
+
+      line(0, 0, 0, -height-h);
+
+      //laser sight (perhaps add for powerup/first level later?)
+      fill(0, 0, 255, 120);
+      stroke(0,0,255,120);
+      rect(0, -h-height, w, height*2);
+    }
     popMatrix();
     if (keyPressed) {
       if (key==CODED) {
