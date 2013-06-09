@@ -21,6 +21,7 @@ class Tutorial {
     tHeight=textAscent()+textDescent();
     fill(255);
     text("Tutorial", width/2, tHeight/2);
+    text("Under Construction",width/2,tHeight*2);
     back.display(width/4, height-s.h/2);
     instructions.display(width*3/4, height-s.h/2);
     if (back.pressed) {
