@@ -1,7 +1,7 @@
 int totallevels=1;
 Level[] levels=new Level[totallevels];
 int levelcounter;
-ArrayList shots=new ArrayList();
+ArrayList <Bullet>shots=new ArrayList<Bullet>();
 Base b;
 Shooter s;
 boolean move=false;
