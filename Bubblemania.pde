@@ -1,4 +1,4 @@
-int totallevels=1;
+int totallevels=2;
 Level[] levels=new Level[totallevels];
 int levelcounter;
 ArrayList <Bullet>shots=new ArrayList<Bullet>();
@@ -32,12 +32,14 @@ Button main;
 //quit=end game, main=main menu
 boolean menu=true;
 Menu m;
+Bullet bu2;
 void setup() {
-
+  
 
   colorMode(HSB);
   rectMode(CENTER);
   size(800, displayHeight-100);
+  //optimal size(800,800);
   b=new Base();
   s=new Shooter();
   g=new Gameover();
@@ -45,22 +47,23 @@ void setup() {
   w=new Won();
   m=new Menu();
   shots.add(new Bullet());
-  for (int i=0;i<levels.length;i++) {
-    if (i==0) {
-      levels[i]=new Level(48);
-    } else {
-      levels[i]=new Level(30);
-      //each level has 30 balls;
-    }
-  }
 
+
+  levels[0]=new Level(28);
+  levels[1]=new Level(48);
   //testing;
   textSize(font);
   textAlign(CENTER, CENTER);
+  quit=new Button("End Game");
+  main=new Button("Main Menu");
 }
 void draw() {
 
   if (menu) {
+    levelcounter=1;
+    //every time you are on the menu screen, 
+    //level resets to 1 and all balls are removed
+    //so they can be generated again when playing
     s.angle=0;
     m.display();
     shotsTaken=0;
@@ -76,13 +79,11 @@ void draw() {
     while (levels[levelcounter].balls.size ()>0) {
       levels[levelcounter].balls.remove(0);
     }
-    levelcounter=0;
-    //every time you are on the menu screen, 
-    //level resets to 0 and all balls are removed
-    //so they can be generated again when playing
   } else {
+
     //-------------------GLOBAL POINTS RECORD------------------------
     fpoints=points-shotsTaken*2;
+
     if (fpoints<50) {
       rank="Complete Loser";
     } else if (fpoints<100) {
@@ -103,7 +104,7 @@ void draw() {
     }
     //above is to avoid freeze glitching for code like below
     //referencing shots.size()-1
-    Bullet bu2=(Bullet)shots.get(shots.size()-1);
+    bu2=(Bullet)shots.get(shots.size()-1);
 
     background(bu2.c);
 
@@ -113,11 +114,14 @@ void draw() {
     //------------------------------interface display
     i.display();
 
-    if (levels[levelcounter].balls.size()<1) {
+    if (levels[levelcounter].balls.size()<1&&win==false&&shots.size()<2) {
       //this messes up level progression
       //change if statement to check for something else later
       levels[levelcounter].load=true;
+      //only updates when win is false and there are no balls on screen
+      //not counting ball in cannon
     }
+
     for (int i=0;i<levels.length;i++) {
       if (levels[i].load==true) {
         levels[i].load=false;
@@ -127,7 +131,39 @@ void draw() {
           Bullet temp=(levels[levelcounter].balls.get(j));
           switch (levelcounter) {
           case 0:
+            float dSpace=sqrt((float(width^2)+sq((height-s.h)))/60);
+            float dAngle=atan((height-s.h)/width);
+            float dX=dSpace*cos(dAngle);
+            float dY=dSpace*sin(dAngle);
+            if (j<12) {
+              temp.x=j*dX+s.w/2;
+              temp.y=j*dY+s.w/2;
+            } else if (j<24) {
+              temp.x=width-(j-12)*dX-s.w/2;
+              temp.y=(j-12)*dY+s.w/2;
+            }
+            switch (j) {
+            case 24: 
+              temp.x=width/4;
+              temp.y=(height-s.h)/2;
+              break;
+            case 25:
+              temp.x=width/2;
+              temp.y=(height-s.h)/4;
+              break;
+            case 26:
+              temp.x=width*3/4;
+              temp.y=(height-s.h)/2;
+              break;
+            case 27:
+              temp.x=width/2;
+              temp.y=(height-s.h)*3/4;
+              break;
+            }
+            break;
 
+
+          case 1:
             if (j<8) {
               switch(j) {
               case 0: 
@@ -177,12 +213,8 @@ void draw() {
 
 
             break;
-
-          case 1:
-
-            break;
           }
-          levels[0].colorcheck();
+          levels[levelcounter].colorcheck();
           //can be put one bracket down if break is taken out
         }
       }
@@ -192,16 +224,18 @@ void draw() {
 
     //-------------------------------interface display
 
-      quit=new Button("End Game", bu2.c, color(0, 0, 255, 150), color(255), color(255));
-    quit.display( width*3/4, height-s.h/2);
+
+      quit.display( width*3/4, height-s.h/2, bu2.c, color(0, 0, 255, 150), color(255), color(255));
     if (quit.pressed) {
       gameover=true;
+      quit.pressed=false;
     }
 
-    main=new Button("Main Menu", bu2.c, color(0, 0, 255, 150), color(255), color(255));
-    main.display(width/4, height-s.h/2);
+
+    main.display(width/4, height-s.h/2, bu2.c, color(0, 0, 255, 150), color(255), color(255));
     if (main.pressed&&gameover==false&&win==false) {
       menu=true;
+      main.pressed=false;
     }
     b.display();
     s.display();
@@ -232,15 +266,19 @@ void draw() {
       }
     }
     if (shots.size()==0&&levels[levelcounter].balls.size()==0) {
-      if (levelcounter==totallevels) {
+      if (levelcounter==totallevels-1) {
+        //totallevels-1 as first level is level 0
         win=true;
       } else {
+        if (levelcounter==0) {
+          points=0;
+        }
         levelcounter++;
       }
       //buggy right now because of ball load code
     }
     textSize(50);
-    text(points, width/2, height/2);
+    text(points, width/2, (height-s.h)/2);
 
     if (win) {
       w.display();
@@ -264,8 +302,10 @@ void keyPressed() {
     //be changed afterwards
     if (move==false) {
       if (key==' ') {
+
         Bullet bu=(Bullet)shots.get(shots.size()-1);
         bu.update();
+
         move=true;
         shotsTaken++;
       }
