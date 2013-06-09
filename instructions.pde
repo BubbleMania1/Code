@@ -23,9 +23,13 @@ class Instructions {
 
     tutorial.display(width/2, 8.5*tHeight);
     if (tutorial.pressed) {
-      t.display();
-    }
-    else {
+
+      levelcounter=0;
+      menu=false;
+
+      m.i.tutorial.pressed=false;
+      m.instructions.pressed=false;
+    } else {
       t.sh.angle=0;
     }
   }
