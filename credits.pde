@@ -26,7 +26,10 @@ class Credits {
     y+=yspd;
     yspd+=a;
     if(5*tHeight-6*tHeight+y+tHeight/2>=8.8*tHeight){
-     yspd=-0.9*yspd; 
+     yspd=-0.8*abs(yspd); 
+     if(abs(yspd)<2){
+      yspd=0; 
+     }
     }
    
     back.display(width/2, 9*tHeight);
