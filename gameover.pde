@@ -62,7 +62,7 @@ class Gameover {
         while (levels[levelcounter].balls.size ()>0) {
           levels[levelcounter].balls.remove(0);
         }
-        levelcounter=0;
+        levelcounter=1;
         //balls in current level removed
         t=0;
         x=0;
