@@ -13,10 +13,32 @@ class Bullet {
   Bullet() {
     n=int(random(1, 6));
 
+    //    if (shots.size()>0) {
+    //      Bullet bu1=shots.get(shots.size()-1);
+    //      for (int i=0;i<shots.size()-1;i++) {
+    //        Bullet bu2=shots.get(i);
+    //        for (int j=0;j<levels[levelcounter].balls.size();j++) {
+    //          Bullet bu3=levels[levelcounter].balls.get(j);
+    //
+    //          while (bu1.n!=bu2.n&&bu1.n!=bu3.n) {
+    //            bu1.n=int(random(1, 6));
+    //          }
+    //        }
+    //      }
+    //    }
+
+    //DOEN'T WORK RIGHT NOW ON ANY BALL
+    //should make every new shot have to be one of the colors on screen
+    //can compensate for not working when
+    //shotsize()==0 with new update
+    //function that runs before display and doesn't need to 
+    //use if(shots.size()>0)
+
     //note: to make things less ridiculously difficult, I'm going to 
     //change n so that it can only equal whatever values are 
     //still on screen eventually
     //also balls shouldn't be able to float in mid-air later
+
     switch(n) {
     case 1: 
       c=color(228, 147, 255); 
@@ -54,6 +76,7 @@ class Bullet {
     y=b.y;
   }
   void display() {  
+
     switch(n) {
     case 1: 
       c=color(228, 147, 255); 
@@ -90,6 +113,7 @@ class Bullet {
     ellipse(x, y, d, d);
   }
   void move() {
+
     x+=xspd;
     y-=yspd;
     if (y-d/2<=0) {
@@ -101,6 +125,8 @@ class Bullet {
     if (yspd==0&&xspd==0) {
       move=false;
       shots.add(new Bullet());
+
+
       //every time the ball stops, a new ball is added to the cannon
     }
     if (x-d/2<0||x+d/2>width) {
