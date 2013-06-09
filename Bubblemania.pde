@@ -183,6 +183,7 @@ void draw() {
             break;
           }
           levels[0].update2();
+          //can be put one bracket down if break is taken out
         }
       }
     }
