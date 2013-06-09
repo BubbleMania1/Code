@@ -121,7 +121,8 @@ void draw() {
     for (int i=0;i<levels.length;i++) {
       if (levels[i].load==true) {
         levels[i].load=false;
-        levels[0].update();
+        levels[i].update();
+
         for (int j=0;j<levels[levelcounter].balls.size();j++) {
           Bullet temp=(levels[levelcounter].balls.get(j));
           switch (levelcounter) {
@@ -176,10 +177,12 @@ void draw() {
 
 
             break;
+
           case 1:
 
             break;
           }
+          levels[0].update2();
         }
       }
     }
