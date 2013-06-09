@@ -182,7 +182,7 @@ void draw() {
 
             break;
           }
-          levels[0].update2();
+          levels[0].colorcheck();
           //can be put one bracket down if break is taken out
         }
       }
