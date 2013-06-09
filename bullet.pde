@@ -110,7 +110,7 @@ class Bullet {
   void touch(ArrayList tarray, ArrayList tarray2, Bullet b1) {
     //top ball is b1, b1 is removed from first array
     //bottom ball is removed from tarray2
-    if (dist(b1.x, b1.y, x, y)<b1.d/2+d/2) {
+    if (dist(b1.x, b1.y, x, y)<=b1.d/2+d/2) {
 
       //y=bu=bullet above (relatively) other one
 
