@@ -42,7 +42,7 @@ class Level {
     //-------can be commented out without harm
   
   }
-  void update2(){
+  void colorcheck(){
     //makes sure all balls touching in level are colore differently
      for (int i=0;i<balls.size();i++) {
       Bullet bu1=balls.get(i);
