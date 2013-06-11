@@ -1,0 +1,34 @@
+Pulkita Dua, Yelena Kudryashova, Andrew Suri, Alex Wu
+
+Mrs. Gerstein
+
+Introduction to Programming ½ A
+
+7 June 2012
+
+Project Description: BubbleKraze
+
+Objective:
+
+The object of the game is to clear the screen of any bubbles in each level with the least amount of shots. The more bubbles you make disappear with fewer shots, the higher the score.
+
+How To Play:
+
+The way to remove the bubbles is by shooting a ball towards another same colored bubble. Once two same-colored bubbles are in a row, they disappear. You shoot the bullets from a tank which will be located at the bottom center of the screen. At the beginning of each level, a pattern of bubbles will appear at the top of the screen and the colors will be chosen at random. When you shoot the balls from the tank, you can bounce them off the wall to hit your targets as well. Once you get two balls of the same color touching, they will disappear. If you shoot the bullet and it does not land next to another ball of the same color, then the ball will plant itself next to the ball it touches.
+
+           Your score will change depending on how many bubbles you make disappear and how many shots you take- the less shots you take and the more bubbles you make disappear, the higher the score. You lose two  points for every ball you shoot, and gain 10 points for every ball you make disappear. If a ball touches the cannon, you lose the game and receive a rank. Based on the score you got, you can be ranked as 'Complete Loser' (score of less than 50), 'Barely Competent' (score between 50 and 100 ), 'Amateur' (score between 100 and 200), 'Bubblemaniac' (score between 200 and 300 ) and 'Paras Jha' (score of above 9000).
+
+           This game is similar to Bubble Mania. In Bubble Mania, you throw bubbles out of a cannon and match colors to pop the bubbles. When you pop all the bubbles in time, you advance to the next level. Each 30 seconds, a new row of bubbles appears at the top of the screen shifting down the old row of bubbles and so on. BubbleKraze is a similar game.
+
+The audience target for this game would be kids from anywhere around 6-14 years. However, adults would also enjoy this game. The game is a fun and challenging game that is very interactive and a good time for all.Once you win, you get a big hug from the BubbleKraze Creators team (especially Alex Wu).
+
+Roles:
+
+Code Monkey/Programmer- Alex Wu
+
+QA tester- Andrew Suri
+
+UI designer/Graphic designer- Yelena Kudryashova
+
+Project manager- Pulkita Dua
+
