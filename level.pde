@@ -1,87 +1,419 @@
-class Level {
-  ArrayList <Bullet> balls=new ArrayList <Bullet>();
-  int size;
-  Bullet bu;
+int totallevels=7;
+Level[] levels=new Level[totallevels];
+int levelcounter;
+ArrayList <Bullet>shots=new ArrayList<Bullet>();
+Base b;
+Shooter s;
+boolean move=false;
+//keeps track of if balls are moving
+//only one ball can be shot at a time
+//---------------------------WIN/LOSE------------------------------
+boolean gameover=false;
+
+boolean win=false;
+Won w;  
+
+Gameover g;
+
+//-------------------------------------------------------------------
+Interface i;
+float font=50;
+//---------------------------POINT STUFF--------------------------
+String rank;
+int points;
+int shotsTaken;
+//shotsTaken subtracts from score after winning
+int fpoints;
+//5 points deducted per shot taken
+//-------------------------------------------------------------------
+
+Button quit;
+Button main;
+//quit=end game, main=main menu
+boolean menu=true;
+Menu m;
+Bullet bu2;
+void setup() {
 
 
-  boolean load=false;
+  colorMode(HSB);
+  rectMode(CENTER);
+  size(800, displayHeight-100);
+  //optimal size(800,800);
+  b=new Base();
+  s=new Shooter();
+  g=new Gameover();
+  i=new Interface();
+  w=new Won();
+  m=new Menu();
+  shots.add(new Bullet());
 
-  Level(int tsize) {
-    size=tsize;
+
+  levels[0]=new Level(28);
+  levels[1]=new Level(48);
+  levels[2]=new Level(42);
+  levels[3]=new Level(19);
+  levels[4]=new Level(22);
+  levels[5]= new Level(41);
+  levels[6]= new Level(60);
+  //testing;
+  textSize(font);
+  textAlign(CENTER, CENTER);
+  quit=new Button("End Game");
+  main=new Button("Main Menu");
+}
+void draw() {
+
+  if (menu) {
+    levelcounter=1;
+    //every time you are on the menu screen, 
+    //level resets to 1 and all balls are removed
+    //so they can be generated again when playing
+    s.angle=0;
+    m.display();
+    shotsTaken=0;
+    points=0;
+    while (shots.size ()>0) {
+      shots.remove(shots.size()-1);
+    }
+    shots.add(new Bullet());
+    //separate add statement so that shot bullets will be removed 
+    //and new one added in cannon
+    move=false;
+
+    while (levels[levelcounter].balls.size ()>0) {
+      levels[levelcounter].balls.remove(0);
+    }
   } 
-  void update() {
-    while (balls.size ()<size) {
-      balls.add(new Bullet());
+  else {
+
+    //-------------------GLOBAL POINTS RECORD------------------------
+    fpoints=points-shotsTaken*2;
+
+    if (fpoints<50) {
+      rank="Complete Loser";
+    } 
+    else if (fpoints<100) {
+      rank="Barely Competent";
+    } 
+    else if (fpoints<200) {
+      rank="Amateur";
+    } 
+    else if (fpoints<300) {
+      rank="Bubblemaniac";
+    } 
+    else if (fpoints>9000) {
+      rank="Paras Jha";
     }
-  }
-  void display() {
-    //note: text being partially hidden by balls is intentional
-    //if fix necessary, move text to function called after ball display function
-    //or remove last few balls from array
-    fill(255);
-    if (levelcounter==0) {
-      text("Level 0: Tutorial", width/2, textAscent()+textDescent());
-      // text("Level "+levelcounter, width/2,2*(textAscent()+textDescent()));
-      textSize(20);
-      text("Be careful: If a ball stop below the line here, you lose", width/2, height-s.h-(textAscent()+textDescent())/2);
-      pushMatrix();
-      translate((textAscent()+textDescent())/2, (height-s.h)/2);
-      rotate(PI/2);
-      text("You can bounce your shots off the wall!", 0, 0);
-      //left wall
-      popMatrix();
-      pushMatrix();
-      translate(width-(textAscent()+textDescent())/2, (height-s.h)/2);
-      rotate(-PI/2);
-      text("You can bounce your shots off the wall!", 0, 0);
-      //right wall
-      popMatrix();
-      text("The background is always the same color as your shot",width/2,height/2-6*(textAscent()+textDescent()));
-      text("Shoot at balls with the same color as your shot to pop them for 10 points!",width/2,height/2-4*(textAscent()+textDescent()));
-      text("Don't take too many shots; you lose 2 points every shot",width/2,height/2-2*(textAscent()+textDescent()));
-      text("Pop all balls to advance to the next level",width/2,height/2);
-      text("Shots stick to the ceiling",width/2,(textAscent()+textDescent())/2);
-      text("Don't get too used to this aiming beam; it'll disappear next level",width/2,height-s.h-2*(textAscent()+textDescent()));
-      textSize(40);
-      text("Good Luck!",width/2,height/2+textAscent()+textDescent());
-    } else {
-      text("Level "+levelcounter, width/2, textAscent()+textDescent());
+    //insert pictures and music for rank
+    //-----------------------------------------------------------------
+
+    if (shots.size()<1) {
+      shots.add(new Bullet());
+      move=false;
     }
-    for (int i=0;i<balls.size();i++) {
-      Bullet bu=balls.get(i);
-      bu.display();
+    //above is to avoid freeze glitching for code like below
+    //referencing shots.size()-1
+    bu2=(Bullet)shots.get(shots.size()-1);
+
+    background(bu2.c);
+
+    //shots.size()>0 so that can't glitch out when all balls gone
 
 
-      for (int j=0;j<shots.size();j++) {
-        Bullet original=shots.get(j);
+    //------------------------------interface display
+    i.display();
 
-        bu.touch(shots, balls, original);
+    if (levels[levelcounter].balls.size()<1&&win==false&&shots.size()<2) {
+      //this messes up level progression
+      //change if statement to check for something else later
+      levels[levelcounter].load=true;
+      //only updates when win is false and there are no balls on screen
+      //not counting ball in cannon
+    }
+
+    for (int i=0;i<levels.length;i++) {
+      if (levels[i].load==true) {
+        levels[i].load=false;
+        levels[i].update();
+
+        for (int j=0;j<levels[levelcounter].balls.size();j++) {
+          Bullet temp=(levels[levelcounter].balls.get(j));
+          switch (levelcounter) {
+          case 0:
+            float dSpace=sqrt((float(width^2)+sq((height-s.h)))/60);
+            float dAngle=atan((height-s.h)/width);
+            float dX=dSpace*cos(dAngle);
+            float dY=dSpace*sin(dAngle);
+            if (j<12) {
+              temp.x=j*dX+s.w/2;
+              temp.y=j*dY+s.w/2;
+            } 
+            else if (j<24) {
+              temp.x=width-(j-12)*dX-s.w/2;
+              temp.y=(j-12)*dY+s.w/2;
+            }
+            switch (j) {
+            case 24: 
+              temp.x=width/4;
+              temp.y=(height-s.h)/2;
+              break;
+            case 25:
+              temp.x=width/2;
+              temp.y=(height-s.h)/4;
+              break;
+            case 26:
+              temp.x=width*3/4;
+              temp.y=(height-s.h)/2;
+              break;
+            case 27:
+              temp.x=width/2;
+              temp.y=(height-s.h)*3/4;
+              break;
+            }
+            break;
+
+
+          case 1:
+            if (j<8) {
+              switch(j) {
+              case 0: 
+                temp.x=width/2-50;
+                temp.y=height/2-80;
+                break;
+              case 1:
+                temp.x=width/2+50; 
+                temp.y=height/2-80;
+                break;
+
+              case 2:
+                temp.x=width/2-100;
+                temp.y=height/2+50-80;
+                break;
+              case 3:
+                temp.x=width/2-100+s.w;
+                temp.y=height/2+50+s.w-80;
+
+                break;
+              case 4:
+                temp.x=width/2-100+2*s.w;
+                temp.y=height/2+50+1.5*s.w-80;
+
+                break;
+              case 5:
+                temp.x=width/2-100+3*s.w;
+                temp.y=height/2+50+1.5*s.w-80;  
+                break;
+              case 6:
+                temp.x=width/2-100+4*s.w;
+                temp.y=height/2+50+s.w-80;
+                break;
+              case 7:
+                temp.x=width/2-100+5*s.w;
+                temp.y=height/2+50-80;
+                break;
+              }
+            } 
+            else if (j<28) {
+
+              temp.x=(j-8)*s.w+s.w/2;
+              temp.y=width/2-100-80;
+            } 
+            else if (j<49) {
+              temp.x=(j-28)*s.w+s.w/2;
+              temp.y=width/2+200-80;
+            }
+
+
+            break;
+          case 2:
+
+            if (j<3) {
+              temp.x= j*s.w+s.w/2;
+              temp.y=j*s.w+s.w/2+500;
+            }
+            else if (j<11) {
+              temp.x= (j-3)*s.w+s.w/2;
+              temp.y=(j-3)*s.w+s.w/2+250;
+            }
+            else if (j<25) {
+              temp.x= (j-11)*s.w+s.w/2;
+              temp.y=(j-11)*s.w+s.w/2;
+            }
+            else if (j<35)
+            {
+              temp.x= (j-25)*s.w+s.w/2+250;
+              temp.y=(j-25)*s.w+s.w/2;
+            }
+            else if (j<40) {
+              temp.x= (j-35)*s.w+s.w/2+500;
+              temp.y=(j-35)*s.w+s.w/2;
+            }
+            else if (j<42) {
+              temp.x= (j-40)*s.w+s.w/2+710;
+              temp.y=(j-40)*s.w+s.w/2;
+            }
+            break;
+          case 3:
+            if (j<19) {
+              temp.x=j*s.w+s.w/2+30;
+              temp.y=420;
+            }
+            break;
+          case 4:
+            if (j<6) {
+              temp.x=j*s.w*3.5+s.w/2+30;
+              temp.y= 150;
+            }
+            else if (j<11) {
+              temp.x= (j-6)*s.w*3.5+s.w/2+100;
+              temp.y= 300;
+            }
+            else if (j<17) {
+              temp.x= (j-11)*s.w*3.5+s.w/2+30;
+              temp.y= 450;
+            }
+            else if (j<22) {
+              temp.x= (j-17)*s.w*3.5+s.w/2+100;
+              temp.y= 600;
+            }
+          case 5:
+            if (j<5) {
+              temp.x=60;
+              temp.y= j*s.w+s.w/2;
+            }
+            else if (j<17) {
+              temp.x=230;
+              temp.y= (j-5)*s.w+s.w/2;
+            }
+            else if (j<21) {
+              temp.x=400;
+              temp.y= (j-17)*s.w+s.w/2;
+            }
+            else if (j<30) {
+              temp.x=570;
+              temp.y= (j-21)*s.w+s.w/2;
+            }
+            else if (j<41) {
+              temp.x=740;
+              temp.y= (j-30)*s.w+s.w/2;
+            }
+            break;
+
+          case 6:
+
+            if ( j<11) {
+              temp.x=j*s.w+s.w/2+180;
+              temp.y=280;
+            }
+            else if (j<16) {
+              temp.x=200;
+              temp.y=(j-11)*s.w+s.w/2+300;
+            }
+            else if (j<26) {
+              temp.x=(j-16)*s.w+s.w/2+220;
+              temp.y=480;
+            }
+               else if (j<30) {
+              temp.x=600;
+              temp.y=(j-26)*s.w+s.w/2+300;
+            }
+          }
+          levels[levelcounter].colorcheck();
+          //can be put one bracket down if break is taken out
+        }
       }
     }
-    //--------checks level balls for intersect with level balls
-    //    for (int i=0;i<balls.size();i++) {
-    //      Bullet bu1=balls.get(i);
-    //      for (int j=0;j<balls.size();j++) {
-    //        if (j!=i) {
-    //          Bullet bu2=balls.get(j);
-    //          bu1.touch(balls, balls, bu2);
-    //        }
-    //      }
-    //    }
-    //-------can be commented out without harm
-  }
-  void colorcheck() {
-    //makes sure all balls touching in level are colore differently
-    for (int i=0;i<balls.size();i++) {
-      Bullet bu1=balls.get(i);
-      for (int j=0;j<balls.size();j++) {
+
+    levels[levelcounter].display();
+
+    //-------------------------------interface display
+
+
+      quit.display( width*3/4, height-s.h/2, bu2.c, color(0, 0, 255, 150), color(255), color(255));
+    if (quit.pressed) {
+      gameover=true;
+      quit.pressed=false;
+    }
+
+
+    main.display(width/4, height-s.h/2, bu2.c, color(0, 0, 255, 150), color(255), color(255));
+    if (main.pressed&&gameover==false&&win==false) {
+      menu=true;
+      main.pressed=false;
+    }
+    b.display();
+    s.display();
+    for (int i=0;i<shots.size();i++) {
+      Bullet bu=(Bullet)shots.get(i);
+      bu.display();
+
+      for (int j=0;j<shots.size();j++) {
         if (j!=i) {
-          Bullet bu2=balls.get(j);
-          while (dist (bu1.x, bu1.y, bu2.x, bu2.y)<=bu1.d/2+bu2.d/2&&bu1.n==bu2.n) {
-            bu1.n=int(random(1, 6));
-            bu2.n=int(random(1, 6));
-          }
+          Bullet bu1=(Bullet)shots.get(j);
+          bu.touch(shots, shots, bu1);
         }
+      }
+    }
+
+    if (move==true) {
+      if (shots.size()>0) {
+        Bullet bu=(Bullet)shots.get(shots.size()-1);
+        bu.move();
+      }
+    }
+    for (int i=0;i<shots.size()-1;i++) {
+      Bullet bu3=(Bullet)shots.get(i);
+      if (bu3.y+bu3.d/2>height-s.h) {
+        gameover=true;
+        //shots.size()-1 so it doesn't count the ball inside the cannon
+        //which would otherwise always fulfill the gameover condition
+      }
+    }
+    if (shots.size()==0&&levels[levelcounter].balls.size()==0) {
+      if (levelcounter==totallevels-1) {
+        //totallevels-1 as first level is level 0
+        win=true;
+      } 
+      else {
+        if (levelcounter==0) {
+          points=0;
+        }
+        levelcounter++;
+      }
+      //buggy right now because of ball load code
+    }
+    textSize(50);
+    text(points, width/2, (height-s.h)/2);
+
+    if (win) {
+      w.display();
+      if (w.t>255) {
+        s.angle=0;
+        //cannon resets after fade
+      }
+    }
+    if (gameover) {
+      g.display();
+      if (g.t>255) {
+        s.angle=0;
+        //cannon resets after fade
+      }
+    }
+  }
+}
+void keyPressed() {
+  if (gameover==false&&win==false&&menu==false) {
+    //can't shoot when gameover or win so that score can't
+    //be changed afterwards
+    if (move==false) {
+      if (key==' ') {
+
+        Bullet bu=(Bullet)shots.get(shots.size()-1);
+        bu.update();
+
+        move=true;
+        shotsTaken++;
       }
     }
   }
