@@ -1,4 +1,4 @@
-int totallevels=6;
+int totallevels=7;
 Level[] levels=new Level[totallevels];
 int levelcounter;
 ArrayList <Bullet>shots=new ArrayList<Bullet>();
@@ -55,6 +55,7 @@ void setup() {
   levels[3]=new Level(19);
   levels[4]=new Level(22);
   levels[5]= new Level(41);
+  levels[6]= new Level(60);
   //testing;
   textSize(font);
   textAlign(CENTER, CENTER);
@@ -293,12 +294,30 @@ void draw() {
               temp.x=570;
               temp.y= (j-21)*s.w+s.w/2;
             }
-            else if(j<41) {
-                temp.x=740;
+            else if (j<41) {
+              temp.x=740;
               temp.y= (j-30)*s.w+s.w/2;
             }
-         
-              
+            break;
+
+          case 6:
+
+            if ( j<11) {
+              temp.x=j*s.w+s.w/2+180;
+              temp.y=280;
+            }
+            else if (j<16) {
+              temp.x=200;
+              temp.y=(j-11)*s.w+s.w/2+300;
+            }
+            else if (j<26) {
+              temp.x=(j-16)*s.w+s.w/2+220;
+              temp.y=480;
+            }
+               else if (j<30) {
+              temp.x=600;
+              temp.y=(j-26)*s.w+s.w/2+300;
+            }
           }
           levels[levelcounter].colorcheck();
           //can be put one bracket down if break is taken out
