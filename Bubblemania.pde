@@ -1,4 +1,4 @@
-int totallevels=7;
+int totallevels=8;
 Level[] levels=new Level[totallevels];
 int levelcounter;
 ArrayList <Bullet>shots=new ArrayList<Bullet>();
@@ -55,7 +55,8 @@ void setup() {
   levels[3]=new Level(19);
   levels[4]=new Level(22);
   levels[5]= new Level(41);
-  levels[6]= new Level(60);
+  levels[6]= new Level(30);
+  levels[7]= new Level(85);
   //testing;
   textSize(font);
   textAlign(CENTER, CENTER);
@@ -277,6 +278,7 @@ void draw() {
               temp.x= (j-17)*s.w*3.5+s.w/2+100;
               temp.y= 600;
             }
+            break;
           case 5:
             if (j<5) {
               temp.x=60;
@@ -314,9 +316,47 @@ void draw() {
               temp.x=(j-16)*s.w+s.w/2+220;
               temp.y=480;
             }
-               else if (j<30) {
+            else if (j<30) {
               temp.x=600;
               temp.y=(j-26)*s.w+s.w/2+300;
+            }
+            break;
+          case 7:
+            if ( j<19) {
+              temp.x=j*s.w+s.w/2;
+              temp.y=30;
+            }
+            else if (j<33) {
+              temp.x=40-s.w/2;
+              temp.y= (j-19)*s.w+s.w/2+50;
+            }
+            else if (j<47) {
+              temp.x= 760-s.w/2;
+              temp.y=(j-33)*s.w+s.w/2+50;
+            }
+            else if ( j<64) {
+              temp.x=(j-47)*s.w+s.w/2+60-s.w/2;
+              temp.y=590;
+            }
+            else if (j<69) {
+              temp.x= (j-64)*s.w+s.w/2+200-s.w/2;
+              temp.y=(j-64)*s.w+s.w/2+height/2-s.h;
+            }
+            else if (j<75) {
+              temp.x=(j-70)*s.w+s.w/2+200+s.w*6-s.w/2; 
+              temp.y=-(j-70)*s.w+s.w/2+height/2-s.h+4*s.w;
+            }
+            else if (j<80) {
+              temp.x=(j-75)*s.w+s.w/2+200+s.w-s.w/2; 
+              temp.y=-(j-75)*s.w+s.w/2+height/2-s.h-s.w;
+            }
+            else if (j<84) {
+              temp.x= (j-80)*s.w+s.w/2+200+s.w*6-s.w/2;
+              temp.y=(j-80)*s.w+s.w/2+height/2-s.h-s.w*4;
+            }
+            if (j==84) {
+              temp.x=width/2;
+              temp.y=(height-s.h)/2;
             }
           }
           levels[levelcounter].colorcheck();
