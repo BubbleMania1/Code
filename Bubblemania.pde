@@ -1,4 +1,4 @@
-int totallevels=2;
+int totallevels=6;
 Level[] levels=new Level[totallevels];
 int levelcounter;
 ArrayList <Bullet>shots=new ArrayList<Bullet>();
@@ -34,7 +34,7 @@ boolean menu=true;
 Menu m;
 Bullet bu2;
 void setup() {
-  
+
 
   colorMode(HSB);
   rectMode(CENTER);
@@ -51,6 +51,10 @@ void setup() {
 
   levels[0]=new Level(28);
   levels[1]=new Level(48);
+  levels[2]=new Level(42);
+  levels[3]=new Level(19);
+  levels[4]=new Level(22);
+  levels[5]= new Level(41);
   //testing;
   textSize(font);
   textAlign(CENTER, CENTER);
@@ -79,20 +83,25 @@ void draw() {
     while (levels[levelcounter].balls.size ()>0) {
       levels[levelcounter].balls.remove(0);
     }
-  } else {
+  } 
+  else {
 
     //-------------------GLOBAL POINTS RECORD------------------------
     fpoints=points-shotsTaken*2;
 
     if (fpoints<50) {
       rank="Complete Loser";
-    } else if (fpoints<100) {
+    } 
+    else if (fpoints<100) {
       rank="Barely Competent";
-    } else if (fpoints<200) {
+    } 
+    else if (fpoints<200) {
       rank="Amateur";
-    } else if (fpoints<300) {
+    } 
+    else if (fpoints<300) {
       rank="Bubblemaniac";
-    } else if (fpoints>9000) {
+    } 
+    else if (fpoints>9000) {
       rank="Paras Jha";
     }
     //insert pictures and music for rank
@@ -138,7 +147,8 @@ void draw() {
             if (j<12) {
               temp.x=j*dX+s.w/2;
               temp.y=j*dY+s.w/2;
-            } else if (j<24) {
+            } 
+            else if (j<24) {
               temp.x=width-(j-12)*dX-s.w/2;
               temp.y=(j-12)*dY+s.w/2;
             }
@@ -202,17 +212,93 @@ void draw() {
                 temp.y=height/2+50-80;
                 break;
               }
-            } else if (j<28) {
+            } 
+            else if (j<28) {
 
               temp.x=(j-8)*s.w+s.w/2;
               temp.y=width/2-100-80;
-            } else if (j<49) {
+            } 
+            else if (j<49) {
               temp.x=(j-28)*s.w+s.w/2;
               temp.y=width/2+200-80;
             }
 
 
             break;
+          case 2:
+
+            if (j<3) {
+              temp.x= j*s.w+s.w/2;
+              temp.y=j*s.w+s.w/2+500;
+            }
+            else if (j<11) {
+              temp.x= (j-3)*s.w+s.w/2;
+              temp.y=(j-3)*s.w+s.w/2+250;
+            }
+            else if (j<25) {
+              temp.x= (j-11)*s.w+s.w/2;
+              temp.y=(j-11)*s.w+s.w/2;
+            }
+            else if (j<35)
+            {
+              temp.x= (j-25)*s.w+s.w/2+250;
+              temp.y=(j-25)*s.w+s.w/2;
+            }
+            else if (j<40) {
+              temp.x= (j-35)*s.w+s.w/2+500;
+              temp.y=(j-35)*s.w+s.w/2;
+            }
+            else if (j<42) {
+              temp.x= (j-40)*s.w+s.w/2+710;
+              temp.y=(j-40)*s.w+s.w/2;
+            }
+            break;
+          case 3:
+            if (j<19) {
+              temp.x=j*s.w+s.w/2+30;
+              temp.y=420;
+            }
+            break;
+          case 4:
+            if (j<6) {
+              temp.x=j*s.w*3.5+s.w/2+30;
+              temp.y= 150;
+            }
+            else if (j<11) {
+              temp.x= (j-6)*s.w*3.5+s.w/2+100;
+              temp.y= 300;
+            }
+            else if (j<17) {
+              temp.x= (j-11)*s.w*3.5+s.w/2+30;
+              temp.y= 450;
+            }
+            else if (j<22) {
+              temp.x= (j-17)*s.w*3.5+s.w/2+100;
+              temp.y= 600;
+            }
+          case 5:
+            if (j<5) {
+              temp.x=60;
+              temp.y= j*s.w+s.w/2;
+            }
+            else if (j<17) {
+              temp.x=230;
+              temp.y= (j-5)*s.w+s.w/2;
+            }
+            else if (j<21) {
+              temp.x=400;
+              temp.y= (j-17)*s.w+s.w/2;
+            }
+            else if (j<30) {
+              temp.x=570;
+              temp.y= (j-21)*s.w+s.w/2;
+            }
+            else if(j<41) {
+                temp.x=740;
+              temp.y= (j-30)*s.w+s.w/2;
+            }
+         
+              
           }
           levels[levelcounter].colorcheck();
           //can be put one bracket down if break is taken out
@@ -269,7 +355,8 @@ void draw() {
       if (levelcounter==totallevels-1) {
         //totallevels-1 as first level is level 0
         win=true;
-      } else {
+      } 
+      else {
         if (levelcounter==0) {
           points=0;
         }
