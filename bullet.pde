@@ -64,7 +64,8 @@ class Bullet {
       case 4:
         c=color(tint);
       }
-    } else {
+    } 
+    else {
       switch(n) {
       case 1: 
         c=color(228, 147, 255); 
@@ -121,7 +122,8 @@ class Bullet {
       case 4:
         c=color(tint);
       }
-    } else {
+    } 
+    else {
       switch(n) {
       case 1: 
         c=color(228, 147, 255); 
@@ -183,7 +185,8 @@ class Bullet {
           move=false;
           shots.add(new Bullet());
         }
-      } else {
+      } 
+      else {
         move=false;
         shots.add(new Bullet());
       }
@@ -250,8 +253,7 @@ class Bullet {
       case 4:
 
         //color randomizer
-        if (dist(b1.x, b1.y, x, y)<b1.d/2+d/2||b1.y-s.w/2<=0) {
-
+        if (b1.y-b1.d/2<=0) {
           b1.touched++;
         }
         if (b1.touched>0) {
@@ -266,7 +268,8 @@ class Bullet {
         }
         break;
       }
-    } else {
+    } 
+    else {
       if (dist(b1.x, b1.y, x, y)<=b1.d/2+d/2) {
         b1.xspd=0;
         b1.yspd=0;
