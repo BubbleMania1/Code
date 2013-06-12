@@ -24,7 +24,15 @@ int points;
 int shotsTaken;
 //shotsTaken subtracts from score after winning
 int fpoints;
-//5 points deducted per shot taken
+//2 points deducted per shot taken
+import ddf.minim.*;
+Minim minim;
+AudioPlayer player;
+String song="Dorapop.mp3";
+String psong;
+//psong stores previous song when song choice buttons pushed
+//this is so game end songs can be reverted easily
+boolean muted;
 //-------------------------------------------------------------------
 
 Button quit;
@@ -35,7 +43,8 @@ Menu m;
 Bullet bu2;
 void setup() {
 
-
+  minim=new Minim(this);
+  player=minim.loadFile(song);
   colorMode(HSB);
   rectMode(CENTER);
   size(800, displayHeight-100);
@@ -64,7 +73,24 @@ void setup() {
   main=new Button("Main Menu");
 }
 void draw() {
+  if (m.o.changed==0&&m.o.songs[m.o.songs.length-1].pressed==false) {
+    song="Dorapop.mp3";
+  }
+  for (int i=0;i<m.o.songs.length;i++) {
+    if (m.o.changed>0.5) {
+      player.pause();
+      m.o.changed=0.5;
+      //need to pause every time song switches
+    }
+  }
 
+  if (muted==false) {
+    if (player.isPlaying()==false&&gameover==false&&win==false) {
+      player=minim.loadFile(song);
+      player.play();
+      player.loop();
+    }
+  }
   if (menu) {
     levelcounter=1;
     //every time you are on the menu screen, 
@@ -85,27 +111,29 @@ void draw() {
     while (levels[levelcounter].balls.size ()>0) {
       levels[levelcounter].balls.remove(0);
     }
-  } 
-  else {
+  } else {
 
     //-------------------GLOBAL POINTS RECORD------------------------
     fpoints=points-shotsTaken*2;
 
-    if (fpoints<50) {
+    if (fpoints<5000) {
       rank="Complete Loser";
-    } 
-    else if (fpoints<100) {
+      song="sadtrombone.mp3";
+    } else if (fpoints<10000) {
       rank="Barely Competent";
-    } 
-    else if (fpoints<200) {
+      song="Que Sera.mp3";
+    } else if (fpoints<20000) {
       rank="Amateur";
-    } 
-    else if (fpoints<300) {
+      song="wedidit.mp3";
+    } else if (fpoints<30000) {
       rank="Bubblemaniac";
+      song="champions.mp3";
     } 
-    else if (fpoints>9000) {
+    if (fpoints>90000) {
       rank="Paras Jha";
+      song="Freddie.mp3";
     }
+
     //insert pictures and music for rank
     //-----------------------------------------------------------------
 
@@ -149,8 +177,7 @@ void draw() {
             if (j<12) {
               temp.x=j*dX+s.w/2;
               temp.y=j*dY+s.w/2;
-            } 
-            else if (j<24) {
+            } else if (j<24) {
               temp.x=width-(j-12)*dX-s.w/2;
               temp.y=(j-12)*dY+s.w/2;
             }
@@ -214,13 +241,11 @@ void draw() {
                 temp.y=height/2+50-80;
                 break;
               }
-            } 
-            else if (j<28) {
+            } else if (j<28) {
 
               temp.x=(j-8)*s.w+s.w/2;
               temp.y=width/2-100-80;
-            } 
-            else if (j<49) {
+            } else if (j<49) {
               temp.x=(j-28)*s.w+s.w/2;
               temp.y=width/2+200-80;
             }
@@ -232,25 +257,20 @@ void draw() {
             if (j<3) {
               temp.x= j*s.w+s.w/2;
               temp.y=j*s.w+s.w/2+500;
-            }
-            else if (j<11) {
+            } else if (j<11) {
               temp.x= (j-3)*s.w+s.w/2;
               temp.y=(j-3)*s.w+s.w/2+250;
-            }
-            else if (j<25) {
+            } else if (j<25) {
               temp.x= (j-11)*s.w+s.w/2;
               temp.y=(j-11)*s.w+s.w/2;
-            }
-            else if (j<35)
+            } else if (j<35)
             {
               temp.x= (j-25)*s.w+s.w/2+250;
               temp.y=(j-25)*s.w+s.w/2;
-            }
-            else if (j<40) {
+            } else if (j<40) {
               temp.x= (j-35)*s.w+s.w/2+500;
               temp.y=(j-35)*s.w+s.w/2;
-            }
-            else if (j<42) {
+            } else if (j<42) {
               temp.x= (j-40)*s.w+s.w/2+710;
               temp.y=(j-40)*s.w+s.w/2;
             }
@@ -265,16 +285,13 @@ void draw() {
             if (j<6) {
               temp.x=j*s.w*3.5+s.w/2+30;
               temp.y= 150;
-            }
-            else if (j<11) {
+            } else if (j<11) {
               temp.x= (j-6)*s.w*3.5+s.w/2+100;
               temp.y= 300;
-            }
-            else if (j<17) {
+            } else if (j<17) {
               temp.x= (j-11)*s.w*3.5+s.w/2+30;
               temp.y= 450;
-            }
-            else if (j<22) {
+            } else if (j<22) {
               temp.x= (j-17)*s.w*3.5+s.w/2+100;
               temp.y= 600;
             }
@@ -283,20 +300,16 @@ void draw() {
             if (j<5) {
               temp.x=60;
               temp.y= j*s.w+s.w/2;
-            }
-            else if (j<17) {
+            } else if (j<17) {
               temp.x=230;
               temp.y= (j-5)*s.w+s.w/2;
-            }
-            else if (j<21) {
+            } else if (j<21) {
               temp.x=400;
               temp.y= (j-17)*s.w+s.w/2;
-            }
-            else if (j<30) {
+            } else if (j<30) {
               temp.x=570;
               temp.y= (j-21)*s.w+s.w/2;
-            }
-            else if (j<41) {
+            } else if (j<41) {
               temp.x=740;
               temp.y= (j-30)*s.w+s.w/2;
             }
@@ -307,16 +320,13 @@ void draw() {
             if ( j<11) {
               temp.x=j*s.w+s.w/2+180;
               temp.y=280;
-            }
-            else if (j<16) {
+            } else if (j<16) {
               temp.x=200;
               temp.y=(j-11)*s.w+s.w/2+300;
-            }
-            else if (j<26) {
+            } else if (j<26) {
               temp.x=(j-16)*s.w+s.w/2+220;
               temp.y=480;
-            }
-            else if (j<30) {
+            } else if (j<30) {
               temp.x=600;
               temp.y=(j-26)*s.w+s.w/2+300;
             }
@@ -325,32 +335,25 @@ void draw() {
             if ( j<19) {
               temp.x=j*s.w+s.w/2;
               temp.y=30;
-            }
-            else if (j<33) {
+            } else if (j<33) {
               temp.x=40-s.w/2;
               temp.y= (j-19)*s.w+s.w/2+50;
-            }
-            else if (j<47) {
+            } else if (j<47) {
               temp.x= 760-s.w/2;
               temp.y=(j-33)*s.w+s.w/2+50;
-            }
-            else if ( j<64) {
+            } else if ( j<64) {
               temp.x=(j-47)*s.w+s.w/2+60-s.w/2;
               temp.y=590;
-            }
-            else if (j<69) {
+            } else if (j<69) {
               temp.x= (j-64)*s.w+s.w/2+200-s.w/2;
               temp.y=(j-64)*s.w+s.w/2+height/2-s.h;
-            }
-            else if (j<75) {
+            } else if (j<75) {
               temp.x=(j-70)*s.w+s.w/2+200+s.w*6-s.w/2; 
               temp.y=-(j-70)*s.w+s.w/2+height/2-s.h+4*s.w;
-            }
-            else if (j<80) {
+            } else if (j<80) {
               temp.x=(j-75)*s.w+s.w/2+200+s.w-s.w/2; 
               temp.y=-(j-75)*s.w+s.w/2+height/2-s.h-s.w;
-            }
-            else if (j<84) {
+            } else if (j<84) {
               temp.x= (j-80)*s.w+s.w/2+200+s.w*6-s.w/2;
               temp.y=(j-80)*s.w+s.w/2+height/2-s.h-s.w*4;
             }
@@ -374,6 +377,8 @@ void draw() {
     if (quit.pressed) {
       gameover=true;
       quit.pressed=false;
+
+      player.pause();
     }
 
 
@@ -404,8 +409,10 @@ void draw() {
     }
     for (int i=0;i<shots.size()-1;i++) {
       Bullet bu3=(Bullet)shots.get(i);
-      if (bu3.y+bu3.d/2>height-s.h) {
+      if (bu3.y+bu3.d/2>height-s.h&&shots.get(shots.size()-1).pspawn!=1) {
         gameover=true;
+        player.pause();
+        //game can't be over when powerup goes under line
         //shots.size()-1 so it doesn't count the ball inside the cannon
         //which would otherwise always fulfill the gameover condition
       }
@@ -414,8 +421,8 @@ void draw() {
       if (levelcounter==totallevels-1) {
         //totallevels-1 as first level is level 0
         win=true;
-      } 
-      else {
+        player.pause();
+      } else {
         if (levelcounter==0) {
           points=0;
         }
