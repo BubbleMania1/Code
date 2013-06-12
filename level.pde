@@ -74,6 +74,9 @@ class Level {
     //makes sure all balls touching in level are colore differently
     for (int i=0;i<balls.size();i++) {
       Bullet bu1=balls.get(i);
+      while(bu1.pspawn==1){
+       bu1.pspawn=int(random(1,3)); 
+      }
       for (int j=0;j<balls.size();j++) {
         if (j!=i) {
           Bullet bu2=balls.get(j);
@@ -84,5 +87,6 @@ class Level {
         }
       }
     }
+    
   }
 }
