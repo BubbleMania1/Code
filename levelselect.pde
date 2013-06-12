@@ -21,7 +21,7 @@ class LevelSelect {
     }
     for (int i=0;i<select.length;i++) {  
 
-      select[i].display(4*i*select[i].rWidth+select[i].rWidth*13, select[i].tHeight+120); 
+      select[i].display(4*i*select[0].rWidth+select[0].rWidth*13, select[i].tHeight+120); 
       if (select[i].pressed) {
         select[i].pressed=false;
         levelcounter=i;
