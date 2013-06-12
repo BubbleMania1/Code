@@ -12,7 +12,10 @@ class Gameover {
   Gameover() {
   }
   void display() {
-
+    if (player.isPlaying()==false) {
+      player=minim.loadFile(song); 
+      player.play();
+    }
     if (keyPressed&&key==ENTER) {
       t=255;
       //skips fade animation
@@ -32,6 +35,7 @@ class Gameover {
       x+=1.5;
       fill(0, 0, 255, t-255);
       text("Rank: "+rank, width/2, height/2-4*(textAscent()+textDescent()));
+
 
       fill(0, 0, 255, y);
       textSize(50);
@@ -70,7 +74,8 @@ class Gameover {
         restart.pressed=false;
         points=0;
         shotsTaken=0;
-
+        player.pause();
+        song=psong;
         //all animations run again if you lose sgain
       }
     }
