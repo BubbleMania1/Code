@@ -66,6 +66,7 @@ class Bullet {
         c=color(tint);
       }
     } else {
+      touched=0;
       switch(n) {
       case 1: 
         c=color(228, 147, 255); 
@@ -208,7 +209,7 @@ class Bullet {
 
         //explosion
         if (dist(b1.x, b1.y, x, y)<=b1.d/2+d/2) {
-          b1.touched++;
+          b1.touched=1;
           b1.xspd=0;
           b1.yspd=0;
           tarray2.remove(this);
