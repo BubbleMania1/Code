@@ -68,7 +68,7 @@ void setup() {
   levels[7]= new Level(85);
   levels[8]= new Level(27);
   levels[9]= new Level(31);
-  levels[10] = new Level(43);
+  levels[10] = new Level(86);
   //testing;
   textSize(font);
   textAlign(CENTER, CENTER);
@@ -446,7 +446,22 @@ void draw() {
               temp.x=(j-36)*s.w*2.5+s.w/2+110;
               temp.y=125;
             }
-            break; 
+            
+          
+            else if (j<61) {
+              temp.x=(j-43)*s.w+s.w/2+50;
+              temp.y=275;
+            }
+              else if (j<68) {
+              temp.x=(j-61)*s.w*2.5+s.w/2+110;
+              temp.y=350;
+            }
+             else if (j<86) {
+              temp.x=(j-68)*s.w+s.w/2+50;
+              temp.y=425;
+            }
+          
+              break; 
             
             
           
