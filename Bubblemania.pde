@@ -81,8 +81,7 @@ void setup() {
 }
 void draw() {
 
-  println("Previous "+psong);
-  println(song);
+
   if (song!=psong) {
     //allows song switching to work
     //checks if songs are changed
