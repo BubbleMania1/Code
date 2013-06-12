@@ -29,9 +29,11 @@ import ddf.minim.*;
 Minim minim;
 AudioPlayer player;
 String song="Dorapop.mp3";
-String psong;
+String psong=song;
+String dsong=song;
 //psong stores previous song when song choice buttons pushed
 //this is so game end songs can be reverted easily
+//dsong stores what song was chosen last
 boolean muted;
 //-------------------------------------------------------------------
 
@@ -45,6 +47,8 @@ void setup() {
 
   minim=new Minim(this);
   player=minim.loadFile(song);
+  player.play();
+  player.loop();
   colorMode(HSB);
   rectMode(CENTER);
   size(800, displayHeight-100);
@@ -76,23 +80,22 @@ void setup() {
   main=new Button("Main Menu");
 }
 void draw() {
-  if (m.o.changed==0&&m.o.songs[m.o.songs.length-1].pressed==false) {
-    song="Dorapop.mp3";
+
+  println("Previous "+psong);
+  println(song);
+  if (song!=psong) {
+    //allows song switching to work
+    //checks if songs are changed
+    player.pause();
+    psong=song;
   }
-  for (int i=0;i<m.o.songs.length;i++) {
-    if (m.o.changed>0.5) {
-      player.pause();
-      m.o.changed=0.5;
-      //need to pause every time song switches
-    }
+  if (muted==true&&player.isPlaying()==true) {
+    player.pause();
   }
 
-  if (muted==false) {
-    if (player.isPlaying()==false&&gameover==false&&win==false) {
-      player=minim.loadFile(song);
-      player.play();
-      player.loop();
-    }
+  if (muted==false&&player.isPlaying()==false) {
+    player=minim.loadFile(song);
+    player.play();
   }
   if (menu) {
     levelcounter=1;
@@ -114,33 +117,34 @@ void draw() {
     while (levels[levelcounter].balls.size ()>0) {
       levels[levelcounter].balls.remove(0);
     }
-  } 
-  else {
+  } else {
 
     //-------------------GLOBAL POINTS RECORD------------------------
     fpoints=points-shotsTaken*2;
-
-    if (fpoints<5000) {
-      rank="Complete Loser";
-      song="sadtrombone.mp3";
-    } 
-    else if (fpoints<10000) {
-      rank="Barely Competent";
-      song="Que Sera.mp3";
-    } 
-    else if (fpoints<20000) {
-      rank="Amateur";
-      song="wedidit.mp3";
-    } 
-    else if (fpoints<30000) {
-      rank="Bubblemaniac";
-      song="champions.mp3";
-    } 
-    if (fpoints>90000) {
-      rank="Paras Jha";
-      song="Freddie.mp3";
+    if (gameover==true||win==true) {
+      if (fpoints<5000) {
+        rank="Complete Loser";
+        psong=song;
+        song="sadtrombone.mp3";
+      } else if (fpoints<10000) {
+        rank="Barely Competent";
+        psong=song;
+        song="Que Sera.mp3";
+      } else if (fpoints<20000) {
+        rank="Amateur";
+        psong=song;
+        song="wedidit.mp3";
+      } else if (fpoints<30000) {
+        rank="Bubblemaniac";
+        psong=song;
+        song="champions.mp3";
+      } 
+      if (fpoints>90000) {
+        rank="Paras Jha";
+        psong=song;
+        song="Freddie.mp3";
+      }
     }
-
     //insert pictures and music for rank
     //-----------------------------------------------------------------
 
@@ -184,8 +188,7 @@ void draw() {
             if (j<12) {
               temp.x=j*dX+s.w/2;
               temp.y=j*dY+s.w/2;
-            } 
-            else if (j<24) {
+            } else if (j<24) {
               temp.x=width-(j-12)*dX-s.w/2;
               temp.y=(j-12)*dY+s.w/2;
             }
@@ -249,13 +252,11 @@ void draw() {
                 temp.y=height/2+50-80;
                 break;
               }
-            } 
-            else if (j<28) {
+            } else if (j<28) {
 
               temp.x=(j-8)*s.w+s.w/2;
               temp.y=width/2-100-80;
-            } 
-            else if (j<49) {
+            } else if (j<49) {
               temp.x=(j-28)*s.w+s.w/2;
               temp.y=width/2+200-80;
             }
@@ -267,25 +268,20 @@ void draw() {
             if (j<3) {
               temp.x= j*s.w+s.w/2;
               temp.y=j*s.w+s.w/2+500;
-            } 
-            else if (j<11) {
+            } else if (j<11) {
               temp.x= (j-3)*s.w+s.w/2;
               temp.y=(j-3)*s.w+s.w/2+250;
-            } 
-            else if (j<25) {
+            } else if (j<25) {
               temp.x= (j-11)*s.w+s.w/2;
               temp.y=(j-11)*s.w+s.w/2;
-            } 
-            else if (j<35)
+            } else if (j<35)
             {
               temp.x= (j-25)*s.w+s.w/2+250;
               temp.y=(j-25)*s.w+s.w/2;
-            } 
-            else if (j<40) {
+            } else if (j<40) {
               temp.x= (j-35)*s.w+s.w/2+500;
               temp.y=(j-35)*s.w+s.w/2;
-            } 
-            else if (j<42) {
+            } else if (j<42) {
               temp.x= (j-40)*s.w+s.w/2+710;
               temp.y=(j-40)*s.w+s.w/2;
             }
@@ -300,16 +296,13 @@ void draw() {
             if (j<6) {
               temp.x=j*s.w*3.5+s.w/2+30;
               temp.y= 150;
-            } 
-            else if (j<11) {
+            } else if (j<11) {
               temp.x= (j-6)*s.w*3.5+s.w/2+100;
               temp.y= 300;
-            } 
-            else if (j<17) {
+            } else if (j<17) {
               temp.x= (j-11)*s.w*3.5+s.w/2+30;
               temp.y= 450;
-            } 
-            else if (j<22) {
+            } else if (j<22) {
               temp.x= (j-17)*s.w*3.5+s.w/2+100;
               temp.y= 600;
             }
@@ -318,20 +311,16 @@ void draw() {
             if (j<5) {
               temp.x=60;
               temp.y= j*s.w+s.w/2;
-            } 
-            else if (j<17) {
+            } else if (j<17) {
               temp.x=230;
               temp.y= (j-5)*s.w+s.w/2;
-            } 
-            else if (j<21) {
+            } else if (j<21) {
               temp.x=400;
               temp.y= (j-17)*s.w+s.w/2;
-            } 
-            else if (j<30) {
+            } else if (j<30) {
               temp.x=570;
               temp.y= (j-21)*s.w+s.w/2;
-            } 
-            else if (j<41) {
+            } else if (j<41) {
               temp.x=740;
               temp.y= (j-30)*s.w+s.w/2;
             }
@@ -342,16 +331,13 @@ void draw() {
             if ( j<11) {
               temp.x=j*s.w+s.w/2+180;
               temp.y=280;
-            } 
-            else if (j<16) {
+            } else if (j<16) {
               temp.x=200;
               temp.y=(j-11)*s.w+s.w/2+300;
-            } 
-            else if (j<26) {
+            } else if (j<26) {
               temp.x=(j-16)*s.w+s.w/2+220;
               temp.y=480;
-            } 
-            else if (j<30) {
+            } else if (j<30) {
               temp.x=600;
               temp.y=(j-26)*s.w+s.w/2+300;
             }
@@ -360,32 +346,25 @@ void draw() {
             if ( j<19) {
               temp.x=j*s.w+s.w/2;
               temp.y=30;
-            } 
-            else if (j<33) {
+            } else if (j<33) {
               temp.x=40-s.w/2;
               temp.y= (j-19)*s.w+s.w/2+50;
-            } 
-            else if (j<47) {
+            } else if (j<47) {
               temp.x= 760-s.w/2;
               temp.y=(j-33)*s.w+s.w/2+50;
-            } 
-            else if ( j<64) {
+            } else if ( j<64) {
               temp.x=(j-47)*s.w+s.w/2+60-s.w/2;
               temp.y=590;
-            } 
-            else if (j<69) {
+            } else if (j<69) {
               temp.x= (j-64)*s.w+s.w/2+200-s.w/2;
               temp.y=(j-64)*s.w+s.w/2+height/2-s.h;
-            } 
-            else if (j<75) {
+            } else if (j<75) {
               temp.x=(j-70)*s.w+s.w/2+200+s.w*6-s.w/2; 
               temp.y=-(j-70)*s.w+s.w/2+height/2-s.h+4*s.w;
-            } 
-            else if (j<80) {
+            } else if (j<80) {
               temp.x=(j-75)*s.w+s.w/2+200+s.w-s.w/2; 
               temp.y=-(j-75)*s.w+s.w/2+height/2-s.h-s.w;
-            } 
-            else if (j<84) {
+            } else if (j<84) {
               temp.x= (j-80)*s.w+s.w/2+200+s.w*6-s.w/2;
               temp.y=(j-80)*s.w+s.w/2+height/2-s.h-s.w*4;
             }
@@ -399,169 +378,142 @@ void draw() {
             if (j<9) {
               temp.x=j*s.w+s.w/2+230;
               temp.y=250;
-            }
-            else if (j<18) {
-               temp.x=(j-9)*s.w+s.w/2+230;
+            } else if (j<18) {
+              temp.x=(j-9)*s.w+s.w/2+230;
               temp.y=350;
-            }
-             else if (j<27) {
-               temp.x=(j-18)*s.w+s.w/2+230;
+            } else if (j<27) {
+              temp.x=(j-18)*s.w+s.w/2+230;
               temp.y=450;
             }
             break;
-            
-            case 9:
-            if (j<7){
+
+          case 9:
+            if (j<7) {
               temp.x=220;
               temp.y=j*s.w+s.w/2+s.w+170;
-            }
-            else if(j<16){
-            temp.x=(j-7)*s.w+s.w/2+200+s.w+7; 
+            } else if (j<16) {
+              temp.x=(j-7)*s.w+s.w/2+200+s.w+7; 
               temp.y=(j-7)*s.w*.65+s.w/2+height/2-s.h- s.w*2;
-          }
-          else if (j<23){
+            } else if (j<23) {
               temp.x=630;
               temp.y=(j-16)*s.w+s.w/2+s.w+170;
-            }
-            else if(j<27){
-            temp.x=(j-23)*s.w+s.w/2+200+s.w+7; 
+            } else if (j<27) {
+              temp.x=(j-23)*s.w+s.w/2+200+s.w+7; 
               temp.y=-(j-23)*s.w*.65+s.w/2+height/2-s.h- s.w*2+210;
-          }
-          else if (j<31){
-             temp.x=(j-27)*s.w+s.w/2+200+s.w+7+s.w*5; 
+            } else if (j<31) {
+              temp.x=(j-27)*s.w+s.w/2+200+s.w+7+s.w*5; 
               temp.y=-(j-27)*s.w*.65+s.w/2+height/2-s.h- s.w*2+210-s.w*3-10;
-          }
-          break;
-          
+            }
+            break;
+
           case 10:
-          if (j<18) {
+            if (j<18) {
               temp.x=j*s.w+s.w/2+50;
               temp.y=50;
-            }
-             else if (j<36) {
+            } else if (j<36) {
               temp.x=(j-18)*s.w+s.w/2+50;
               temp.y=200;
-            }
-            else if (j<43) {
+            } else if (j<43) {
               temp.x=(j-36)*s.w*2.5+s.w/2+110;
               temp.y=125;
-            }
-            
-          
-            else if (j<61) {
+            } else if (j<61) {
               temp.x=(j-43)*s.w+s.w/2+50;
               temp.y=275;
-            }
-              else if (j<68) {
+            } else if (j<68) {
               temp.x=(j-61)*s.w*2.5+s.w/2+110;
               temp.y=350;
-            }
-             else if (j<86) {
+            } else if (j<86) {
               temp.x=(j-68)*s.w+s.w/2+50;
               temp.y=425;
             }
-          
-              break; 
-            
-            
-          
-              
-              
-              
-}
-levels[levelcounter].colorcheck();
-//can be put one bracket down if break is taken out
-}
-}
-}
 
-levels[levelcounter].display();
-
-//-------------------------------interface display
-
-
-quit.display( width*3/4, height-s.h/2, bu2.c, color(0, 0, 255, 150), color(255), color(255));
-if (quit.pressed) {
-  gameover=true;
-  quit.pressed=false;
-
-  player.pause();
-}
-
-
-main.display(width/4, height-s.h/2, bu2.c, color(0, 0, 255, 150), color(255), color(255));
-if (main.pressed&&gameover==false&&win==false) {
-  menu=true;
-  main.pressed=false;
-}
-b.display();
-s.display();
-for (int i=0;i<shots.size();i++) {
-  Bullet bu=(Bullet)shots.get(i);
-  bu.display();
-
-  for (int j=0;j<shots.size();j++) {
-    if (j!=i) {
-      Bullet bu1=(Bullet)shots.get(j);
-      bu.touch(shots, shots, bu1);
+            break;
+          }
+          levels[levelcounter].colorcheck();
+          //can be put one bracket down if break is taken out
+        }
+      }
     }
-  }
-}
 
-if (move==true) {
-  if (shots.size()>0) {
-    Bullet bu=(Bullet)shots.get(shots.size()-1);
-    bu.move();
-  }
-}
-for (int i=0;i<shots.size()-1;i++) {
-  Bullet bu3=(Bullet)shots.get(i);
-  if (bu3.y+bu3.d/2>height-s.h&&shots.get(shots.size()-1).pspawn!=1) {
-    gameover=true;
-    if (g.t==0 ) {
-      player.pause();
+    levels[levelcounter].display();
+
+    //-------------------------------interface display
+
+
+      quit.display( width*3/4, height-s.h/2, bu2.c, color(0, 0, 255, 150), color(255), color(255));
+    if (quit.pressed) {
+      gameover=true;
+      quit.pressed=false;
     }
 
 
-    //game can't be over when powerup goes under line
-    //shots.size()-1 so it doesn't count the ball inside the cannon
-    //which would otherwise always fulfill the gameover condition
-  }
-}
-if (shots.size()==0&&levels[levelcounter].balls.size()==0) {
-  if (levelcounter==totallevels-1) {
-    //totallevels-1 as first level is level 0
-    win=true;
-    if (w.t==0) {
-      player.pause();
+    main.display(width/4, height-s.h/2, bu2.c, color(0, 0, 255, 150), color(255), color(255));
+    if (main.pressed&&gameover==false&&win==false) {
+      menu=true;
+      main.pressed=false;
     }
-  } 
-  else {
-    if (levelcounter==0) {
-      points=0;
-    }
-    levelcounter++;
-  }
-  //buggy right now because of ball load code
-}
-textSize(50);
-text(points, width/2, (height-s.h)/2);
+    b.display();
+    s.display();
+    for (int i=0;i<shots.size();i++) {
+      Bullet bu=(Bullet)shots.get(i);
+      bu.display();
 
-if (win) {
-  w.display();
-  if (w.t>255) {
-    s.angle=0;
-    //cannon resets after fade
+      for (int j=0;j<shots.size();j++) {
+        if (j!=i) {
+          Bullet bu1=(Bullet)shots.get(j);
+          bu.touch(shots, shots, bu1);
+        }
+      }
+    }
+
+    if (move==true) {
+      if (shots.size()>0) {
+        Bullet bu=(Bullet)shots.get(shots.size()-1);
+        bu.move();
+      }
+    }
+    for (int i=0;i<shots.size()-1;i++) {
+      Bullet bu3=(Bullet)shots.get(i);
+      if (bu3.y+bu3.d/2>height-s.h&&shots.get(shots.size()-1).pspawn!=1) {
+        gameover=true;
+
+
+
+        //game can't be over when powerup goes under line
+        //shots.size()-1 so it doesn't count the ball inside the cannon
+        //which would otherwise always fulfill the gameover condition
+      }
+    }
+    if (shots.size()==0&&levels[levelcounter].balls.size()==0) {
+      if (levelcounter==totallevels-1) {
+        //totallevels-1 as first level is level 0
+        win=true;
+      } else {
+        if (levelcounter==0) {
+          points=0;
+        }
+        levelcounter++;
+      }
+      //buggy right now because of ball load code
+    }
+    textSize(50);
+    text(points, width/2, (height-s.h)/2);
+
+    if (win) {
+      w.display();
+      if (w.t>255) {
+        s.angle=0;
+        //cannon resets after fade
+      }
+    }
+    if (gameover) {
+      g.display();
+      if (g.t>255) {
+        s.angle=0;
+        //cannon resets after fade
+      }
+    }
   }
-}
-if (gameover) {
-  g.display();
-  if (g.t>255) {
-    s.angle=0;
-    //cannon resets after fade
-  }
-}
-}
 }
 void keyPressed() {
   if (gameover==false&&win==false&&menu==false) {
@@ -577,5 +529,8 @@ void keyPressed() {
         shotsTaken++;
       }
     }
+  }
+  if (key=='m') {
+    muted=!muted;
   }
 }
