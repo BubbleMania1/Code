@@ -26,6 +26,8 @@ class Instructions {
     text("Two balls of the same color will pop after colliding",width/2,5.5*tHeight);
     text("Try to make the balls disappear as quickly as you can",width/2,6*tHeight);
     text("For every ball popped, you earn 10 points, and for every shot taken, you lose 2.",width/2,6.5*tHeight);
+    text("There are 4 powerups! One pierces, another explodes,",width/2,7*tHeight);
+    text("the third is always a match, and the last switches things up",width/2,7.5*tHeight);
     
     back.display(width/2, 8*tHeight);
     if (back.pressed) {
