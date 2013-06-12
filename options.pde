@@ -1,5 +1,5 @@
 class Options {
-  float changed;
+
   Button songs[]=new Button[3];
   Button back=new Button("Main Menu", color(180, 200, 255, 120), color(0, 0, 255, 150), color(255), color(255));
   Options() {
@@ -19,27 +19,29 @@ class Options {
     text("Options", width/2, (textAscent()+textDescent()/2));
     for (int i=0;i<songs.length;i++) {
       songs[i].display(width/2, width/2-songs[i].tHeight+songs[i].tHeight*i);
-      if (songs[i].pressed) {
-        changed++;
-      }
-    }
-    for (int i=0;i<songs.length-1;i++) {
-      //if any button besides mute is pressed
-      if (songs[i].pressed) {
-        songs[songs.length-1].pressed=false;
-        muted=false;
+      if (i!=songs.length-1) {
+        if (songs[i].pressed) {
+          muted=false;
+        }
       }
     }
 
+
     if (songs[0].pressed) {
-      song="Dorapop.mp3";
       psong=song;
+      song="Dorapop.mp3";
       songs[0].pressed=false;
+      dsong=song;
     }
     if (songs[1].pressed) {
-      song="All By Myself.mp3";
       psong=song;
+      song="All By Myself.mp3";
       songs[1].pressed=false;
+      dsong=song;
+    }
+    if (songs[2].pressed) {
+      muted=true;
+      songs[2].pressed=false;
     }
 
     back.display(width/2, height-2*back.tHeight);
@@ -50,12 +52,6 @@ class Options {
       m.instructions.pressed=false;
       m.start.pressed=false;
       m.lSelect.pressed=false;
-    }
-    if (player.isPlaying()==false) {
-      return;
-    }
-    if (songs[2].pressed) {
-      muted=true;
     }
   }
 }
