@@ -12,10 +12,7 @@ class Gameover {
   Gameover() {
   }
   void display() {
-    if (player.isPlaying()==false) {
-      player=minim.loadFile(song); 
-      player.play();
-    }
+
     if (keyPressed&&key==ENTER) {
       t=255;
       //skips fade animation
@@ -75,7 +72,8 @@ class Gameover {
         points=0;
         shotsTaken=0;
         player.pause();
-        song=psong;
+        song=dsong;
+
         //all animations run again if you lose sgain
       }
     }
