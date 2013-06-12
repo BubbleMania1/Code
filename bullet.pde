@@ -223,6 +223,7 @@ class Bullet {
         }
         if (b1.d>=4*s.w) {
           shots.remove(b1);
+          touched=0;
         }
         break;
       case 2:
@@ -263,6 +264,7 @@ class Bullet {
         if (b1.d/2>height) {
           for (int i=0;i<levels[levelcounter].balls.size();i++) {
             levels[levelcounter].balls.get(i).n=int(random(1, 6));
+            touched=0;
           }
         }
         break;
