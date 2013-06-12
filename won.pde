@@ -12,10 +12,7 @@ class Won {
   Won() {
   }
   void display() {
-    if (player.isPlaying()==false) {
-      player=minim.loadFile(song); 
-      player.play();
-    }
+
     if (keyPressed&&key==ENTER) {
       t=765+255;
       t2=0;
@@ -80,7 +77,7 @@ class Won {
         t2=127.5;
         shotsTaken=0;
         player.pause();
-        song=psong;
+        song=dsong;
         //all animations run again if you win again
       }
     }
