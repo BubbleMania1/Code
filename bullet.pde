@@ -264,6 +264,7 @@ class Bullet {
           for (int i=0;i<levels[levelcounter].balls.size();i++) {
             levels[levelcounter].balls.get(i).n=int(random(1, 6));
             shots.remove(b1);
+            b1.touched=false;
           }
         }
         break;
