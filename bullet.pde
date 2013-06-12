@@ -16,6 +16,7 @@ class Bullet {
   Bullet() {
     n=int(random(1, 6));
     pspawn=int(random(1, 9));
+    pspawn=1;
     //1/8 chance powerup
     if (pspawn==1) {
       ptype=int(random(1, 5));
@@ -64,8 +65,7 @@ class Bullet {
       case 4:
         c=color(tint);
       }
-    } 
-    else {
+    } else {
       switch(n) {
       case 1: 
         c=color(228, 147, 255); 
@@ -122,8 +122,7 @@ class Bullet {
       case 4:
         c=color(tint);
       }
-    } 
-    else {
+    } else {
       switch(n) {
       case 1: 
         c=color(228, 147, 255); 
@@ -183,10 +182,10 @@ class Bullet {
         //before expansion is complete
         if (d/2>height) {
           move=false;
+          shots.remove(this);
           shots.add(new Bullet());
         }
-      } 
-      else {
+      } else {
         move=false;
         shots.add(new Bullet());
       }
@@ -254,7 +253,7 @@ class Bullet {
 
         //color randomizer
         if (b1.y-b1.d/2<=0) {
-          b1.touched++;
+          b1.touched=1;
         }
         if (b1.touched>0) {
           b1.tint+=0.25;
@@ -263,15 +262,12 @@ class Bullet {
         if (b1.d/2>height) {
           for (int i=0;i<levels[levelcounter].balls.size();i++) {
             levels[levelcounter].balls.get(i).n=int(random(1, 6));
-            shots.remove(b1);
-            b1.touched=0;
           }
         }
         break;
       }
-    } 
-    else {
-      if (dist(b1.x, b1.y, x, y)<=b1.d/2+d/2) {
+    } else {
+      if (dist(b1.x, b1.y, x, y)<=b1.d/2+d/2&&b1.pspawn!=1) {
         b1.xspd=0;
         b1.yspd=0;
         if (b1.n==n) {
