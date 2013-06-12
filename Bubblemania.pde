@@ -60,8 +60,6 @@ void setup() {
   w=new Won();
   m=new Menu();
   shots.add(new Bullet());
-
-
   levels[0]=new Level(28);
   levels[1]=new Level(48);
   levels[2]=new Level(42);
@@ -120,6 +118,7 @@ void draw() {
 
     //-------------------GLOBAL POINTS RECORD------------------------
     fpoints=points-shotsTaken*2;
+
     if (gameover==true||win==true) {
       if (fpoints<5000) {
         rank="Complete Loser";
@@ -428,12 +427,12 @@ void draw() {
 
             break;
           }
-          levels[levelcounter].colorcheck();
+         
           //can be put one bracket down if break is taken out
         }
       }
     }
-
+ levels[levelcounter].colorcheck();
     levels[levelcounter].display();
 
     //-------------------------------interface display
