@@ -16,7 +16,7 @@ class Bullet {
   Bullet() {
     n=int(random(1, 6));
     pspawn=int(random(1, 9));
-    pspawn=1;
+    
     //1/8 chance powerup
     if (pspawn==1) {
       ptype=int(random(1, 5));
