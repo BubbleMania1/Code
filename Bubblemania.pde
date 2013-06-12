@@ -411,7 +411,11 @@ void draw() {
       Bullet bu3=(Bullet)shots.get(i);
       if (bu3.y+bu3.d/2>height-s.h&&shots.get(shots.size()-1).pspawn!=1) {
         gameover=true;
-        player.pause();
+        if (g.t==0 ){
+          player.pause();
+        }
+
+
         //game can't be over when powerup goes under line
         //shots.size()-1 so it doesn't count the ball inside the cannon
         //which would otherwise always fulfill the gameover condition
@@ -421,7 +425,9 @@ void draw() {
       if (levelcounter==totallevels-1) {
         //totallevels-1 as first level is level 0
         win=true;
-        player.pause();
+        if (w.t==0) {
+          player.pause();
+        }
       } else {
         if (levelcounter==0) {
           points=0;
