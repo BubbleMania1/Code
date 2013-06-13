@@ -51,7 +51,7 @@ void setup() {
   player.loop();
   colorMode(HSB);
   rectMode(CENTER);
-  size(800, displayHeight-100);
+  size(800, 800);
   //optimal size(800,800);
   b=new Base();
   s=new Shooter();
