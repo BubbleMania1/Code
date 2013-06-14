@@ -3,7 +3,7 @@ Code
 
 Code
 
-The final flow chart is called "BubbleKraze.pdf"
+The final flow chart is called "BubbleKrazeFINAL.pdf"
 
 The final project description is called "finalprojectdescription.doc"
 
